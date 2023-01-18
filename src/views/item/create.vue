@@ -2,7 +2,7 @@
 import { ref } from "vue"
 import { useField } from "vee-validate"
 import * as yup from "yup"
-import { XMarkIcon } from "@heroicons/vue/24/solid"
+import { XMarkIcon, ArrowUturnLeftIcon } from "@heroicons/vue/24/solid"
 
 import itemService from "../../services/item"
 
@@ -43,7 +43,6 @@ function onTagSelect(ev: Event) {
 	if (selectedOpt == undefined || tags.value.some(tag => tag.id == selectedOpt.id)) return
 	tags.value.push(selectedOpt)
 }
-
 function removeTag(idx: number) {
 	tags.value.splice(idx, 1)
 }
@@ -52,7 +51,12 @@ function removeTag(idx: number) {
 <template>
 	<div class="relative w-full min-h-screen">
 		<div class="w-11/12 mx-auto">
-			<h1 class="py-4 text-2xl font-bold text-center">Create Product</h1>
+			<h1 class="py-4 text-2xl font-bold text-center">
+				<a class="inline float-left cursor-pointer" @click="$router.back()">
+					<ArrowUturnLeftIcon class="w-6 h-6 mt-1" />
+				</a>
+				Create Product
+			</h1>
 			<div class="form-control w-full">
 				<label class="label">
 					<span class="label-text">Name</span>

@@ -6,6 +6,10 @@ const props = defineProps({
 		type: Number,
 		required: true,
 	},
+	count: {
+		type: Number,
+		required: true,
+	},
 	modelValue: {
 		type: Number,
 		required: true,
@@ -14,14 +18,16 @@ const props = defineProps({
 
 const emits = defineEmits(["update:modelValue"])
 
-function changeValue(val: number) {
+function toPage(val: number) {
 	emits("update:modelValue", val)
 }
-
-const isComplex = computed(() => props.total > 8)
+const pageCount = computed(() => {
+	return Math.ceil(props.total / props.count)
+})
+const isComplex = computed(() => pageCount.value > 8)
 const inversed = computed(() => {
 	let arr: number[] = []
-	for (let i = props.total; i > props.total - 5; i--) {
+	for (let i = pageCount.value; i > pageCount.value - 5; i--) {
 		arr.push(i)
 	}
 	return arr.reverse()
@@ -32,32 +38,32 @@ const inversed = computed(() => {
 	<div class="text-center">
 		<div class="btn-group">
 			<template v-if="!isComplex">
-				<button class="btn" :class="{ 'btn-active': i == modelValue }" v-for="i in total"
-					@click="changeValue(i)">{{
+				<button class="btn" :class="{ 'btn-active': i == modelValue }" v-for="i in pageCount"
+					@click="toPage(i)">{{
 						i
 					}}</button>
 			</template>
 			<template v-else-if="isComplex && modelValue < 5">
-				<button class="btn" :class="{ 'btn-active': i == modelValue }" v-for="i in 5" @click="changeValue(i)">{{
+				<button class="btn" :class="{ 'btn-active': i == modelValue }" v-for="i in 5" @click="toPage(i)">{{
 					i
 				}}</button>
 				<button class="btn btn-disabled">...</button>
-				<button class="btn" @click="changeValue(total)">{{ total }}</button>
+				<button class="btn" @click="toPage(pageCount)">{{ pageCount }}</button>
 			</template>
-			<template v-else-if="isComplex && modelValue > total - 4">
-				<button class="btn" @click="changeValue(1)">1</button>
+			<template v-else-if="isComplex && modelValue > pageCount - 4">
+				<button class="btn" @click="toPage(1)">1</button>
 				<button class="btn btn-disabled">...</button>
 				<button class="btn" :class="{ 'btn-active': i == modelValue }" v-for="i in inversed"
-					@click="changeValue(i)">{{ i }}</button>
+					@click="toPage(i)">{{ i }}</button>
 			</template>
 			<template v-else>
-				<button class="btn" @click="changeValue(1)">1</button>
+				<button class="btn" @click="toPage(1)">1</button>
 				<button class="btn btn-disabled">...</button>
-				<button class="btn" @click="changeValue(modelValue - 1)">{{ modelValue - 1}}</button>
+				<button class="btn" @click="toPage(modelValue - 1)">{{ modelValue - 1}}</button>
 				<button class="btn btn-active">{{ modelValue }}</button>
-				<button class="btn" @click="changeValue(modelValue + 1)">{{ modelValue + 1}}</button>
+				<button class="btn" @click="toPage(modelValue + 1)">{{ modelValue + 1}}</button>
 				<button class="btn btn-disabled">...</button>
-				<button class="btn" @click="changeValue(total)">{{ total }}</button>
+				<button class="btn" @click="toPage(pageCount)">{{ pageCount }}</button>
 			</template>
 		</div>
 	</div>
