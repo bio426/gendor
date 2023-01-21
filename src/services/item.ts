@@ -1,4 +1,3 @@
-import { number } from "yup"
 import base from "./_base"
 
 const prefix = "item"
@@ -34,12 +33,10 @@ async function list(query: {
 	}>()
 }
 
-async function read(query: {
-	id: string
-}) {
-	const params = new URLSearchParams(query)
+async function read(id: string) {
+	const res = await base.get("/item/" + id)
 
-	const res = await base.get("/item?" + params.toString())
+	return res.json<any>()
 }
 
 export default {

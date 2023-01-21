@@ -3,6 +3,7 @@ import { ref, watch } from "vue"
 import { MagnifyingGlassIcon, FunnelIcon } from "@heroicons/vue/24/solid"
 
 import itemService from "../../services/item"
+import Navigation from "../../components/Navigation.vue"
 import Pagination from "../../components/Pagination.vue"
 import Sidebar from "../../components/Sidebar.vue"
 import IndexSC from "./_components/IndexSC.vue"
@@ -27,6 +28,7 @@ async function getRows() {
 	const data = await itemService.list(body)
 	total.value = data.total
 	rows.value = data.rows
+	// page.value = 1
 }
 watch(page, () => getRows())
 getRows()
@@ -67,7 +69,11 @@ let showSidebar = ref(false)
 						<tbody>
 							<tr v-for="(row, i) in rows">
 								<th>{{ ((page - 1) * 10) + (i + 1) }}</th>
-								<td>{{ row.name }}</td>
+								<td>
+									<router-link class="link" :to="{ name: 'itemId', params: { id: row.name } }">
+										{{ row.name }}
+									</router-link>
+								</td>
 								<td>{{ row.price }}</td>
 								<td class="flex gap-2">
 									<div class="badge" v-for="tag in row.tags">
@@ -79,14 +85,15 @@ let showSidebar = ref(false)
 					</table>
 				</div>
 				<Pagination v-model="page" :total="total" :count="count" />
-				<div class="w-full h-24"></div>
+				<div class="w-full h-36"></div>
 			</div>
-			<div class="fixed left-0 bottom-0 w-full bg-base-100">
-				<div class="grid grid-cols-2 gap-4 w-11/12 mx-auto">
-					<router-link class="btn btn-success btn-block" :to="{ name: 'itemCreate' }">Create</router-link>
-					<button class="btn btn-warning btn-block">Mass</button>
+			<div class="fixed left-0 bottom-16 w-full py-1 bg-base-100">
+				<div class="grid grid-cols-1 gap-4 w-11/12 mx-auto">
+					<router-link class="btn btn-sm btn-success btn-block"
+						:to="{ name: 'itemCreate' }">Create</router-link>
 				</div>
 			</div>
+			<Navigation />
 		</div>
 		<template v-slot:content>
 			<IndexSC />

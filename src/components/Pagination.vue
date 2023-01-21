@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { ref, computed, watch } from "vue"
 
 const props = defineProps({
 	total: {
@@ -31,6 +31,10 @@ const inversed = computed(() => {
 		arr.push(i)
 	}
 	return arr.reverse()
+})
+
+watch(() => props.total, val => {
+	if (props.modelValue * props.count + 1 > props.total) toPage(1)
 })
 </script>
 
