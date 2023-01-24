@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { } from "vue"
+import {} from "vue"
+import { TrashIcon } from "@heroicons/vue/24/solid"
 
 import type { ICartItem } from "../_types"
 
@@ -8,7 +9,6 @@ const props = defineProps<{
 }>()
 
 const emit = defineEmits(["to-cart"])
-
 </script>
 
 <template>
@@ -21,11 +21,16 @@ const emit = defineEmits(["to-cart"])
 		</div>
 		<div class="flex-grow">
 			<span class="text-lg font-medium">{{ item.name }}</span>
-			<br>
-			<span>S/. {{ item.price * item.quantity }} <span class="text-sm">({{ item.price }})</span></span>
+			<br />
+			<span
+				>S/. {{ item.price * item.quantity }}
+				<span class="text-sm">({{ item.price }})</span></span
+			>
 		</div>
-		<div class="text-xl font-bold">
-			S/. 99.99
+		<div class="flex gap-4">
+			<button class="btn btn-error btn-sm" @click="$emit('to-cart')">
+				<TrashIcon class="w-4" />
+			</button>
 		</div>
 	</div>
 </template>

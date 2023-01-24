@@ -1,31 +1,34 @@
 {
-  "name": "gendor-front",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
-    "preview": "vite preview"
-  },
-  "dependencies": {
-    "@heroicons/vue": "^2.0.13",
-    "@vueuse/core": "^9.11.0",
-    "daisyui": "^2.46.1",
-    "ky": "^0.33.1",
-    "vee-validate": "^4.7.3",
-    "vue": "^3.2.45",
-    "vue-router": "^4.1.6",
-    "yup": "^0.32.11"
-  },
-  "devDependencies": {
-    "@types/node": "^18.11.18",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.21",
-    "tailwindcss": "^3.2.4",
-    "typescript": "^4.9.3",
-    "vite": "^4.0.0",
-    "vue-tsc": "^1.0.11"
-  }
+	"name": "gendor-front",
+	"private": true,
+	"version": "0.0.0",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc && vite build",
+		"preview": "vite preview",
+		"format": "prettier --config .prettierrc.json --write .",
+		"format:check": "prettier --config .prettierrc.json --check ."
+	},
+	"dependencies": {
+		"@heroicons/vue": "^2.0.13",
+		"@vueuse/core": "^9.11.0",
+		"daisyui": "^2.46.1",
+		"ky": "^0.33.1",
+		"vee-validate": "^4.7.3",
+		"vue": "^3.2.45",
+		"vue-router": "^4.1.6",
+		"yup": "^0.32.11"
+	},
+	"devDependencies": {
+		"@types/node": "^18.11.18",
+		"@vitejs/plugin-vue": "^4.0.0",
+		"autoprefixer": "^10.4.13",
+		"postcss": "^8.4.21",
+		"prettier": "^2.8.3",
+		"tailwindcss": "^3.2.4",
+		"typescript": "^4.9.3",
+		"vite": "^4.0.0",
+		"vue-tsc": "^1.0.11"
+	}
 }

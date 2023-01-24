@@ -11,5 +11,5 @@ const routes: RouteRecordRaw[] = [
 
 export default createRouter({
 	routes,
-	history: createWebHistory()
+	history: createWebHistory(),
 })

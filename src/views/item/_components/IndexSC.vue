@@ -9,7 +9,11 @@ const emit = defineEmits(["input"])
 		<div class="form-control">
 			<label class="input-group input-group-vertical">
 				<span>Email</span>
-				<input type="text" placeholder="info@site.com" class="input input-bordered" />
+				<input
+					type="text"
+					placeholder="info@site.com"
+					class="input input-bordered"
+				/>
 			</label>
 		</div>
 	</li>
@@ -39,6 +43,10 @@ const emit = defineEmits(["input"])
 		</select>
 	</li>
 	<li>
-		<input type="text" placeholder="info@site.com" class="input input-bordered" />
+		<input
+			type="text"
+			placeholder="info@site.com"
+			class="input input-bordered"
+		/>
 	</li>
 </template>

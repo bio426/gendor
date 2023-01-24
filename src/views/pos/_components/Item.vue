@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { } from "vue"
+import {} from "vue"
 import { PlusIcon } from "@heroicons/vue/24/solid"
 
 import type { IItem } from "../_types"
@@ -22,8 +22,10 @@ const isCartItem = !!props.item.quantity
 		</div>
 		<div class="flex-grow">
 			<span class="text-lg font-medium">{{ item.name }}</span>
-			<br>
-			<span>S/. {{ item.price }} <span class="text-sm">(99.99)</span></span>
+			<br />
+			<span
+				>S/. {{ item.price }} <span class="text-sm">(99.99)</span></span
+			>
 		</div>
 		<div class="flex gap-4">
 			<button class="btn btn-sm" @click="$emit('to-cart')">

@@ -2,11 +2,13 @@
 import { ref } from "vue"
 
 const emit = defineEmits<{
-	(event: "filter", info: {
-		tag: string
-	}): void
+	(
+		event: "filter",
+		info: {
+			tag: string
+		}
+	): void
 }>()
-
 </script>
 
 <template>

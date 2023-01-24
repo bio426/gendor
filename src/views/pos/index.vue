@@ -1,6 +1,11 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import { MagnifyingGlassIcon, FunnelIcon, Square3Stack3DIcon, CurrencyDollarIcon } from "@heroicons/vue/24/solid"
+import {
+	MagnifyingGlassIcon,
+	FunnelIcon,
+	Square3Stack3DIcon,
+	CurrencyDollarIcon,
+} from "@heroicons/vue/24/solid"
 
 import type { IItem } from "./_types"
 import posService from "../../services/pos"
@@ -19,7 +24,7 @@ const items = ref<IItem[]>([])
 
 async function getItems() {
 	const query = {
-		search: search.value
+		search: search.value,
 	}
 	const res = await posService.getItems(query)
 	items.value = res
@@ -35,19 +40,37 @@ getItems()
 				<form @submit.prevent="getItems">
 					<div class="form-control mb-8">
 						<div class="input-group">
-							<input class="input input-bordered flex-grow" type="text" placeholder="Search…"
-								v-model="search" />
-							<button class="btn btn-square" type="button" @click="showSidebar = true">
+							<input
+								class="input input-bordered flex-grow"
+								type="text"
+								placeholder="Search…"
+								v-model="search"
+							/>
+							<button
+								class="btn btn-square"
+								type="button"
+								@click="showSidebar = true"
+							>
 								<FunnelIcon class="w-6" />
 							</button>
-							<button class="btn btn-square" type="submit" @click="getItems">
+							<button
+								class="btn btn-square"
+								type="submit"
+								@click="getItems"
+							>
 								<MagnifyingGlassIcon class="w-6" />
 							</button>
 						</div>
 					</div>
 				</form>
-				<div class="grid grid-cols-1 gap-4 max-h-[70vh] overflow-y-auto">
-					<item :item="item" v-for="item in items" @to-cart="addToCart(item)" />
+				<div
+					class="grid grid-cols-1 gap-4 max-h-[70vh] overflow-y-auto"
+				>
+					<item
+						:item="item"
+						v-for="item in items"
+						@to-cart="addToCart(item)"
+					/>
 				</div>
 				<div class="w-full h-24"></div>
 			</div>
@@ -63,7 +86,11 @@ getItems()
 							{{ cartPrice }}
 						</div>
 					</div>
-					<router-link class="btn btn-sm btn-success btn-block" :to="{ name: 'posCart' }">Cart</router-link>
+					<router-link
+						class="btn btn-sm btn-success btn-block"
+						:to="{ name: 'posCart' }"
+						>Cart</router-link
+					>
 				</div>
 			</div>
 			<Navigation />

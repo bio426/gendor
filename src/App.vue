@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { } from "vue"
+import {} from "vue"
 import { useRouter } from "vue-router"
 
 const router = useRouter()
@@ -10,4 +10,3 @@ const router = useRouter()
 		<router-view />
 	</div>
 </template>
-

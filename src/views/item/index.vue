@@ -8,11 +8,13 @@ import Pagination from "../../components/Pagination.vue"
 import Sidebar from "../../components/Sidebar.vue"
 import IndexSC from "./_components/IndexSC.vue"
 
-const rows = ref<{
-	name: string
-	price: number
-	tags: number[]
-}[]>([])
+const rows = ref<
+	{
+		name: string
+		price: number
+		tags: number[]
+	}[]
+>([])
 
 // pagination
 const search = ref("")
@@ -45,12 +47,24 @@ let showSidebar = ref(false)
 				<form @submit.prevent="getRows">
 					<div class="form-control mb-4">
 						<div class="input-group">
-							<input class="input input-bordered flex-grow" type="text" placeholder="Search…"
-								v-model="search" />
-							<button class="btn btn-square" type="button" @click="showSidebar = true">
+							<input
+								class="input input-bordered flex-grow"
+								type="text"
+								placeholder="Search…"
+								v-model="search"
+							/>
+							<button
+								class="btn btn-square"
+								type="button"
+								@click="showSidebar = true"
+							>
 								<FunnelIcon class="w-6 h-6" />
 							</button>
-							<button class="btn btn-square" type="submit" @click="getRows">
+							<button
+								class="btn btn-square"
+								type="submit"
+								@click="getRows"
+							>
 								<MagnifyingGlassIcon class="w-6 h-6" />
 							</button>
 						</div>
@@ -68,9 +82,15 @@ let showSidebar = ref(false)
 						</thead>
 						<tbody>
 							<tr v-for="(row, i) in rows">
-								<th>{{ ((page - 1) * 10) + (i + 1) }}</th>
+								<th>{{ (page - 1) * 10 + (i + 1) }}</th>
 								<td>
-									<router-link class="link" :to="{ name: 'itemId', params: { id: row.name } }">
+									<router-link
+										class="link"
+										:to="{
+											name: 'itemId',
+											params: { id: row.name },
+										}"
+									>
 										{{ row.name }}
 									</router-link>
 								</td>
@@ -89,8 +109,11 @@ let showSidebar = ref(false)
 			</div>
 			<div class="fixed left-0 bottom-16 w-full py-1 bg-base-100">
 				<div class="grid grid-cols-1 gap-4 w-11/12 mx-auto">
-					<router-link class="btn btn-sm btn-success btn-block"
-						:to="{ name: 'itemCreate' }">Create</router-link>
+					<router-link
+						class="btn btn-sm btn-success btn-block"
+						:to="{ name: 'itemCreate' }"
+						>Create</router-link
+					>
 				</div>
 			</div>
 			<Navigation />

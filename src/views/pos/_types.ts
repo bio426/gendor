@@ -10,4 +10,3 @@ interface ICartItem extends IItem {
 }
 
 export type { IItem, ICartItem }
-

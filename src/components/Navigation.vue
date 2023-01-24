@@ -1,11 +1,16 @@
 <script setup lang="ts">
-import { } from "vue"
+import {} from "vue"
 import { useRouter, useRoute } from "vue-router"
-import { HomeIcon, BanknotesIcon, CubeIcon, Cog6ToothIcon, ClipboardIcon } from "@heroicons/vue/24/solid"
+import {
+	HomeIcon,
+	BanknotesIcon,
+	CubeIcon,
+	Cog6ToothIcon,
+	ClipboardIcon,
+} from "@heroicons/vue/24/solid"
 
 const router = useRouter()
 const route = useRoute()
-
 </script>
 
 <template>
