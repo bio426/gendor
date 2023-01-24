@@ -8,6 +8,7 @@ import {
 } from "@heroicons/vue/24/solid"
 
 import type { IItem } from "./_types"
+import useToast from "../../composables/useToast"
 import posService from "../../services/pos"
 import usePosStore from "./_store"
 import Navigation from "../../components/Navigation.vue"
@@ -15,6 +16,7 @@ import Sidebar from "../../components/Sidebar.vue"
 import IndexSC from "./_components/indexSC.vue"
 import Item from "./_components/Item.vue"
 
+const {showToast} = useToast()
 const { cart, cartPrice, cartLength, addToCart } = usePosStore()
 
 const search = ref("")
@@ -30,6 +32,11 @@ async function getItems() {
 	items.value = res
 }
 getItems()
+
+function toCart(item: IItem){
+	addToCart(item)
+	showToast(`${item.name} added to cart`,2000)
+}
 </script>
 
 <template>
@@ -69,7 +76,7 @@ getItems()
 					<item
 						:item="item"
 						v-for="item in items"
-						@to-cart="addToCart(item)"
+						@to-cart="toCart(item)"
 					/>
 				</div>
 				<div class="w-full h-24"></div>

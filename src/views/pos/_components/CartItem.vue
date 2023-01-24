@@ -8,7 +8,7 @@ const props = defineProps<{
 	item: ICartItem
 }>()
 
-const emit = defineEmits(["to-cart"])
+const emit = defineEmits(["remove"])
 </script>
 
 <template>
@@ -28,7 +28,7 @@ const emit = defineEmits(["to-cart"])
 			>
 		</div>
 		<div class="flex gap-4">
-			<button class="btn btn-error btn-sm" @click="$emit('to-cart')">
+			<button class="btn btn-error btn-sm" @click="$emit('remove')">
 				<TrashIcon class="w-4" />
 			</button>
 		</div>

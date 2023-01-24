@@ -25,11 +25,21 @@ function addToCart(item: IItem) {
 	cart.value[idx].quantity += 1
 }
 
-export default function () {
+function removeFromCart(idx: number) {
+	let item = cart.value[idx]
+	if (item.quantity > 1) {
+		item.quantity -= 1
+		return
+	}
+	cart.value.splice(idx, 1)
+}
+
+export default function() {
 	return {
 		cart,
 		cartLength,
 		cartPrice,
 		addToCart,
+		removeFromCart,
 	}
 }
