@@ -1,5 +1,5 @@
 const config = {
-	apiUrl: process.env.API_URL || "http://localhost:1323/api",
+	apiUrl: import.meta.env.VITE_API_URL || "http://localhost:1323/api",
 }
 
 
