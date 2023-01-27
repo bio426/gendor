@@ -3,6 +3,7 @@ import { } from "vue"
 import { useRouter } from "vue-router"
 
 import Toasts from "./components/Toast.vue"
+import Confirmation from "./components/Confirmation.vue"
 
 const router = useRouter()
 </script>
@@ -11,5 +12,6 @@ const router = useRouter()
 	<div>
 		<router-view />
 		<Toasts />
+		<Confirmation />
 	</div>
 </template>

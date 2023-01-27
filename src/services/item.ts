@@ -2,7 +2,7 @@ import base from "./_base"
 
 const prefix = "item"
 
-async function create(body: { name: string; price: number; tags: number[] }) {
+async function create(body: { name: string; price: number; tags: string[] }) {
 	const res = await base.post(prefix, {
 		json: body,
 	})
@@ -31,8 +31,15 @@ async function read(id: string) {
 	return res.json<any>()
 }
 
+async function getTags() {
+	const res = await base.get(prefix + "/tag")
+
+	return res.json<string[]>()
+}
+
 export default {
 	create,
 	list,
 	read,
+	getTags,
 }

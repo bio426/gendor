@@ -15,7 +15,7 @@ const route = useRoute()
 
 <template>
 	<div class="btm-nav">
-		<router-link active-class="active" :to="{ name: 'posClient' }">
+		<router-link active-class="active" :to="{ name: 'admin' }">
 			<Cog6ToothIcon class="w-6" />
 			<span class="btm-nav-label">Admin</span>
 		</router-link>
