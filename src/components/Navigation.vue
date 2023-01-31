@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {} from "vue"
+import { } from "vue"
 import { useRouter, useRoute } from "vue-router"
 import {
 	HomeIcon,
@@ -31,9 +31,9 @@ const route = useRoute()
 			<BanknotesIcon class="w-6" />
 			<span class="btm-nav-label">Pos</span>
 		</router-link>
-		<router-link active-class="active" :to="{ name: 'posClient' }">
+		<router-link active-class="active" :to="{ name: 'sale' }">
 			<ClipboardIcon class="w-6" />
-			<span class="btm-nav-label">Sale</span>
+			<span class="btm-nav-label">Sales</span>
 		</router-link>
 	</div>
 </template>

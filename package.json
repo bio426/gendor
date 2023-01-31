@@ -13,6 +13,7 @@
 	"dependencies": {
 		"@heroicons/vue": "^2.0.13",
 		"@vueuse/core": "^9.11.0",
+		"chart.js": "^4.2.0",
 		"daisyui": "^2.46.1",
 		"ky": "^0.33.1",
 		"vee-validate": "^4.7.3",
