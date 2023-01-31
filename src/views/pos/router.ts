@@ -19,6 +19,11 @@ const routesItem: RouteRecordRaw[] = [
 		name: "posPayment",
 		component: () => import("./payment.vue"),
 	},
+	{
+		path: prefix + "/finish",
+		name: "posFinish",
+		component: () => import("./finish.vue"),
+	},
 ]
 
 export default routesItem

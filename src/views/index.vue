@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { } from "vue"
+import { ref } from "vue"
 
 import useToast from "../composables/useToast"
 import useConfirmation from "../composables/useConfirmation"
 import Navigation from "../components/Navigation.vue"
+import Overlay from "../components/Overlay.vue"
 
 const { showToast } = useToast()
 const { confirm } = useConfirmation()
@@ -17,6 +18,8 @@ async function testConfirm() {
 	console.log("gaaa", res)
 }
 
+const isLoading = ref(false)
+
 </script>
 
 <template>
@@ -25,6 +28,13 @@ async function testConfirm() {
 			<h1 class="py-4 text-2xl font-bold text-center">Dashboard</h1>
 			<button class="btn" @click="handle">Show Toast</button>
 			<button class="btn" @click="testConfirm">confirm</button>
+			<button class="btn" @click="testConfirm">confirm</button>
+			<button class="btn" @click="isLoading = !isLoading">change loading</button>
+			<Overlay :loading="isLoading">
+				<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam perspiciatis amet illum, quos omnis
+					animi dignissimos fuga architecto voluptas porro voluptate eum assumenda non nam, exercitationem
+					delectus impedit modi ipsam.</p>
+			</Overlay>
 		</div>
 		<Navigation />
 	</div>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from "vue"
 import { useDebounceFn } from "@vueuse/core"
-import { ArrowUturnLeftIcon } from "@heroicons/vue/24/solid"
+import { ArrowUturnLeftIcon, XCircleIcon } from "@heroicons/vue/24/solid"
 
 import type { IItem } from "./_types"
 import usePosStore from "./_store"
@@ -37,10 +37,13 @@ const handleSearch = useDebounceFn((ev: Event) => {
 	<div class="relative w-full min-h-screen">
 		<div class="w-11/12 mx-auto">
 			<h1 class="py-4 text-2xl font-bold text-center">
-				<a class="inline float-left cursor-pointer" @click="$router.back()">
+				<button class="inline float-left cursor-pointer" @click="$router.back()">
 					<ArrowUturnLeftIcon class="w-6 mt-1" />
-				</a>
+				</button>
 				Cart
+				<button class="inline float-right cursor-pointer" @click="$router.push({ name: 'pos' })">
+					<XCircleIcon class="w-6 mt-1" />
+				</button>
 			</h1>
 			<input class="input input-bordered w-full mb-8" type="text" placeholder="Search…" list="pos-search"
 				v-model="search" @input="handleSearch" />

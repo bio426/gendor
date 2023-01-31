@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { } from "vue"
-import { ArrowUturnLeftIcon } from "@heroicons/vue/24/solid"
+import { ArrowUturnLeftIcon, XCircleIcon } from "@heroicons/vue/24/solid"
 
 const name = ""
 const nameE = ""
@@ -10,10 +10,13 @@ const nameE = ""
 	<div class="relative w-full min-h-screen">
 		<div class="w-11/12 mx-auto">
 			<h1 class="py-4 text-2xl font-bold text-center">
-				<a class="inline float-left cursor-pointer" @click="$router.back()">
-					<ArrowUturnLeftIcon class="w-6 h-6 mt-1" />
-				</a>
+				<button class="inline float-left cursor-pointer" @click="$router.back()">
+					<ArrowUturnLeftIcon class="w-6 mt-1" />
+				</button>
 				Client
+				<button class="inline float-right cursor-pointer" @click="$router.push({ name: 'pos' })">
+					<XCircleIcon class="w-6 mt-1" />
+				</button>
 			</h1>
 			<div class="form-control w-full">
 				<label class="label">

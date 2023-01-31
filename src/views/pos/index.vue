@@ -16,7 +16,7 @@ import Sidebar from "../../components/Sidebar.vue"
 import IndexSC from "./_components/indexSC.vue"
 import Item from "./_components/Item.vue"
 
-const {showToast} = useToast()
+const { showToast } = useToast()
 const { cart, cartPrice, cartLength, addToCart } = usePosStore()
 
 const search = ref("")
@@ -33,9 +33,9 @@ async function getItems() {
 }
 getItems()
 
-function toCart(item: IItem){
+function toCart(item: IItem) {
 	addToCart(item)
-	showToast(`${item.name} added to cart`,2000)
+	showToast(`${item.name} added to cart`, 2000)
 }
 </script>
 
@@ -47,37 +47,19 @@ function toCart(item: IItem){
 				<form @submit.prevent="getItems">
 					<div class="form-control mb-8">
 						<div class="input-group">
-							<input
-								class="input input-bordered flex-grow"
-								type="text"
-								placeholder="Search…"
-								v-model="search"
-							/>
-							<button
-								class="btn btn-square"
-								type="button"
-								@click="showSidebar = true"
-							>
+							<input class="input input-bordered flex-grow" type="text" placeholder="Search…"
+								v-model="search" />
+							<button class="btn btn-square" type="button" @click="showSidebar = true">
 								<FunnelIcon class="w-6" />
 							</button>
-							<button
-								class="btn btn-square"
-								type="submit"
-								@click="getItems"
-							>
+							<button class="btn btn-square" type="submit" @click="getItems">
 								<MagnifyingGlassIcon class="w-6" />
 							</button>
 						</div>
 					</div>
 				</form>
-				<div
-					class="grid grid-cols-1 gap-4 max-h-[70vh] overflow-y-auto"
-				>
-					<item
-						:item="item"
-						v-for="item in items"
-						@to-cart="toCart(item)"
-					/>
+				<div class="grid grid-cols-1 gap-4 max-h-[70vh] overflow-y-auto">
+					<item :item="item" v-for="item in items" @to-cart="toCart(item)" />
 				</div>
 				<div class="w-full h-24"></div>
 			</div>
@@ -86,18 +68,14 @@ function toCart(item: IItem){
 					<div class="flex justify-center gap-4">
 						<div class="badge badge-info gap-2">
 							<Square3Stack3DIcon class="w-4" />
-							{{ cartLength }}
+							{{ cartLength.toFixed(2) }}
 						</div>
 						<div class="badge badge-info gap-2">
 							<CurrencyDollarIcon class="w-4" />
-							{{ cartPrice }}
+							{{ cartPrice.toFixed(2) }}
 						</div>
 					</div>
-					<router-link
-						class="btn btn-sm btn-success btn-block"
-						:to="{ name: 'posCart' }"
-						>Cart</router-link
-					>
+					<router-link class="btn btn-sm btn-success btn-block" :to="{ name: 'posCart' }">Cart</router-link>
 				</div>
 			</div>
 			<Navigation />
