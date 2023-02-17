@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { } from "vue"
+import { ref } from "vue"
 import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/solid"
 
 import Navigation from "../../components/Navigation.vue"

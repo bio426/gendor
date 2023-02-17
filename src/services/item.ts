@@ -1,8 +1,9 @@
 import base from "./_base"
+import { IItem } from "../interfaces/item"
 
 const prefix = "item"
 
-async function create(body: { name: string; price: number; tags: string[] }) {
+async function create(body: IItem) {
 	const res = await base.post(prefix, {
 		json: body,
 	})
@@ -15,14 +16,7 @@ async function list(query: { page: string; count: string; search: string }) {
 
 	const res = await base.get(prefix + "?" + params.toString())
 
-	return res.json<{
-		total: number
-		rows: {
-			name: string
-			price: number
-			tags: number[]
-		}[]
-	}>()
+	return res.json<IItem[]>()
 }
 
 async function read(id: string) {

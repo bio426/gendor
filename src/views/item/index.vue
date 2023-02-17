@@ -7,14 +7,10 @@ import Navigation from "../../components/Navigation.vue"
 import Pagination from "../../components/Pagination.vue"
 import Sidebar from "../../components/Sidebar.vue"
 import IndexSC from "./_components/IndexSC.vue"
+import { IItem } from "../../interfaces/item"
+import { IAdminTag } from "../../interfaces/admin"
 
-const rows = ref<
-	{
-		name: string
-		price: number
-		tags: number[]
-	}[]
->([])
+const rows = ref<IItem[]>([])
 
 // pagination
 const search = ref("")
@@ -37,6 +33,15 @@ getRows()
 
 // test Sidebar
 let showSidebar = ref(false)
+
+// dinamic color
+function isDarkText(hexcolor: string) {
+	var r = parseInt(hexcolor.substring(1, 3), 16)
+	var g = parseInt(hexcolor.substring(3, 5), 16)
+	var b = parseInt(hexcolor.substring(5, 7), 16)
+	var yiq = (r * 299 + g * 587 + b * 114) / 1000
+	return yiq >= 128
+}
 </script>
 
 <template>
@@ -96,10 +101,22 @@ let showSidebar = ref(false)
 								</td>
 								<td>{{ row.price }}</td>
 								<td class="flex gap-2">
-									<div class="badge" v-for="tag in row.tags">
+									<div
+										class="badge"
+										:class="[
+											isDarkText('#cecece')
+												? 'text-neutral'
+												: 'text-base-content',
+										]"
+										:style="{ backgroundColor: '#fabada' }"
+										v-for="tag in row.tags"
+									>
 										{{ tag }}
 									</div>
 								</td>
+							</tr>
+							<tr v-if="rows.length == 0">
+								<td colspan="3">gaa</td>
 							</tr>
 						</tbody>
 					</table>

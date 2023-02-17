@@ -5,10 +5,11 @@ import { ArrowUturnLeftIcon, TrashIcon } from "@heroicons/vue/24/solid"
 import adminService from "../../services/admin"
 import useToast from "../../composables/useToast"
 import CreateTagModal from "./_components/CreateTagModal.vue"
+import {IAdminTag} from "../../interfaces/admin"
 
 const { showToast } = useToast()
 
-const rows = ref<string[]>([])
+const rows = ref<IAdminTag[]>([])
 
 async function getRows() {
 	const data = await adminService.getTags()
@@ -16,8 +17,8 @@ async function getRows() {
 }
 getRows()
 
-async function deleteTag(tag: string) {
-	const body = { value: tag }
+async function deleteTag(name: string) {
+	const body = { name }
 	await adminService.deleteTag(body)
 	getRows()
 }
@@ -29,7 +30,10 @@ const showCreateTag = ref(false)
 	<div class="relative w-full min-h-screen">
 		<div class="w-11/12 mx-auto">
 			<h1 class="py-4 text-2xl font-bold text-center">
-				<a class="inline float-left cursor-pointer" @click="$router.back()">
+				<a
+					class="inline float-left cursor-pointer"
+					@click="$router.back()"
+				>
 					<ArrowUturnLeftIcon class="w-6 h-6 mt-1" />
 				</a>
 				Tags
@@ -40,17 +44,28 @@ const showCreateTag = ref(false)
 						<tr>
 							<th></th>
 							<th>Name</th>
+							<th>Color</th>
 							<th>Actions</th>
 						</tr>
 					</thead>
 					<tbody>
 						<tr v-for="(row, i) in rows">
-							<th>{{ i+ 1 }}</th>
+							<th>{{ i + 1 }}</th>
 							<td>
-								{{ row }}
+								{{ row.name }}
 							</td>
 							<td>
-								<button class="btn btn-sm btn-error" @click="deleteTag(row)">
+								<span
+									class="inline-block w-4 h-4 mx-auto rounded-full bg-white"
+									:style="{ 'background-color': row.color }"
+								></span>
+							</td>
+							<td>
+								<button
+									class="btn btn-sm btn-error"
+									@click="deleteTag(row.name)"
+									disabled
+								>
 									<TrashIcon class="w-4" />
 								</button>
 							</td>
@@ -62,9 +77,17 @@ const showCreateTag = ref(false)
 		</div>
 		<div class="fixed left-0 bottom-0 w-full py-1 bg-base-100">
 			<div class="grid grid-cols-1 gap-4 w-11/12 mx-auto">
-				<button class="btn btn-sm btn-success btn-block" @click="showCreateTag = true">Create</button>
+				<button
+					class="btn btn-sm btn-success btn-block"
+					@click="showCreateTag = true"
+				>
+					Create
+				</button>
 			</div>
 		</div>
-		<CreateTagModal :show="showCreateTag" @closing="showCreateTag = false, getRows()" />
+		<CreateTagModal
+			:show="showCreateTag"
+			@closing=";(showCreateTag = false), getRows()"
+		/>
 	</div>
 </template>
