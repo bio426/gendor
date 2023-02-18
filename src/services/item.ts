@@ -16,7 +16,7 @@ async function list(query: { page: string; count: string; search: string }) {
 
 	const res = await base.get(prefix + "?" + params.toString())
 
-	return res.json<IItem[]>()
+	return res.json<{ total: number; rows: IItem[] }>()
 }
 
 async function read(id: string) {
@@ -25,15 +25,8 @@ async function read(id: string) {
 	return res.json<any>()
 }
 
-async function getTags() {
-	const res = await base.get(prefix + "/tag")
-
-	return res.json<string[]>()
-}
-
 export default {
 	create,
 	list,
 	read,
-	getTags,
 }

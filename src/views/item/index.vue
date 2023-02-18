@@ -102,21 +102,21 @@ function isDarkText(hexcolor: string) {
 								<td>{{ row.price }}</td>
 								<td class="flex gap-2">
 									<div
-										class="badge"
+										class="badge font-medium"
 										:class="[
-											isDarkText('#cecece')
+											isDarkText(tag.color)
 												? 'text-neutral'
 												: 'text-base-content',
 										]"
-										:style="{ backgroundColor: '#fabada' }"
+										:style="{ backgroundColor: tag.color }"
 										v-for="tag in row.tags"
 									>
-										{{ tag }}
+										{{ tag.name }}
 									</div>
 								</td>
 							</tr>
-							<tr v-if="rows.length == 0">
-								<td colspan="3">gaa</td>
+							<tr class="text-center" v-if="rows.length == 0">
+								<td colspan="4">No items</td>
 							</tr>
 						</tbody>
 					</table>

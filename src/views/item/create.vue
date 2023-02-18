@@ -52,7 +52,7 @@ async function createProduct() {
 	const body = {
 		name: name.value,
 		price: price.value,
-		tags: tags.value,
+		tags: tagOpts.value.filter(opt=>tags.value.includes(opt.name)),
 	}
 	await itemService.create(body)
 	showToast("New product created", 2000)
