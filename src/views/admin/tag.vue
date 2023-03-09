@@ -5,11 +5,11 @@ import { ArrowUturnLeftIcon, TrashIcon } from "@heroicons/vue/24/solid"
 import adminService from "../../services/admin"
 import useToast from "../../composables/useToast"
 import CreateTagModal from "./_components/CreateTagModal.vue"
-import {IAdminTag} from "../../interfaces/admin"
+import { ICategory } from "../../interfaces/admin"
 
 const { showToast } = useToast()
 
-const rows = ref<IAdminTag[]>([])
+const rows = ref<ICategory[]>([])
 
 async function getRows() {
 	const data = await adminService.getTags()
@@ -17,9 +17,8 @@ async function getRows() {
 }
 getRows()
 
-async function deleteTag(name: string) {
-	const body = { name }
-	await adminService.deleteTag(body)
+async function deleteTag(id: string) {
+	await adminService.deleteTag(id)
 	getRows()
 }
 
@@ -42,7 +41,6 @@ const showCreateTag = ref(false)
 				<table class="table table-zebra w-full">
 					<thead>
 						<tr>
-							<th></th>
 							<th>Name</th>
 							<th>Color</th>
 							<th>Actions</th>
@@ -50,7 +48,6 @@ const showCreateTag = ref(false)
 					</thead>
 					<tbody>
 						<tr v-for="(row, i) in rows">
-							<th>{{ i + 1 }}</th>
 							<td>
 								{{ row.name }}
 							</td>
@@ -63,7 +60,7 @@ const showCreateTag = ref(false)
 							<td>
 								<button
 									class="btn btn-sm btn-error"
-									@click="deleteTag(row.name)"
+									@click="deleteTag(row.id)"
 									disabled
 								>
 									<TrashIcon class="w-4" />

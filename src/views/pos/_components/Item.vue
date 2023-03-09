@@ -2,10 +2,10 @@
 import {} from "vue"
 import { PlusIcon } from "@heroicons/vue/24/solid"
 
-import type { IItem } from "../_types"
+import type { IProduct } from "../_types"
 
 const props = defineProps<{
-	item: IItem
+	item: IProduct
 }>()
 
 const emit = defineEmits(["to-cart"])

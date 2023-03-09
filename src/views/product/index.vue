@@ -2,15 +2,14 @@
 import { ref, watch } from "vue"
 import { MagnifyingGlassIcon, FunnelIcon } from "@heroicons/vue/24/solid"
 
-import itemService from "../../services/item"
+import itemService from "../../services/product"
 import Navigation from "../../components/Navigation.vue"
 import Pagination from "../../components/Pagination.vue"
 import Sidebar from "../../components/Sidebar.vue"
 import IndexSC from "./_components/IndexSC.vue"
-import { IItem } from "../../interfaces/item"
-import { IAdminTag } from "../../interfaces/admin"
+import { IProduct } from "../../interfaces/product"
 
-const rows = ref<IItem[]>([])
+const rows = ref<IProduct[]>([])
 
 // pagination
 const search = ref("")
@@ -19,14 +18,13 @@ const page = ref(1)
 const total = ref(0)
 async function getRows() {
 	const body = {
-		page: String(page.value),
-		count: String(count.value),
+		page: page.value,
+		count: count.value,
 		search: search.value,
 	}
 	const data = await itemService.list(body)
 	total.value = data.total
 	rows.value = data.rows
-	// page.value = 1
 }
 watch(page, () => getRows())
 getRows()
@@ -79,15 +77,13 @@ function isDarkText(hexcolor: string) {
 					<table class="table table-zebra w-full">
 						<thead>
 							<tr>
-								<th></th>
 								<th>Name</th>
 								<th>Price (S/.)</th>
-								<th>Tags</th>
+								<th>Category</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr v-for="(row, i) in rows">
-								<th>{{ (page - 1) * 10 + (i + 1) }}</th>
 								<td>
 									<router-link
 										class="link"
@@ -104,14 +100,15 @@ function isDarkText(hexcolor: string) {
 									<div
 										class="badge font-medium"
 										:class="[
-											isDarkText(tag.color)
+											isDarkText(row.category.color)
 												? 'text-neutral'
 												: 'text-base-content',
 										]"
-										:style="{ backgroundColor: tag.color }"
-										v-for="tag in row.tags"
+										:style="{
+											backgroundColor: row.category.color,
+										}"
 									>
-										{{ tag.name }}
+										{{ row.category.name }}
 									</div>
 								</td>
 							</tr>

@@ -5,15 +5,15 @@ import { useField } from "vee-validate"
 import * as yup from "yup"
 import { XMarkIcon, ArrowUturnLeftIcon } from "@heroicons/vue/24/solid"
 
-import itemService from "../../services/item"
+import itemService from "../../services/product"
 import adminService from "../../services/admin"
 import useToast from "../../composables/useToast"
-import {IAdminTag} from "../../interfaces/admin"
+import { ICategory } from "../../interfaces/admin"
 
 const router = useRouter()
 const { showToast } = useToast()
 
-const tagOpts = ref<IAdminTag[]>([])
+const tagOpts = ref<ICategory[]>([])
 
 async function getTagOpts() {
 	const data = await adminService.getTags()
@@ -34,15 +34,15 @@ const {
 	initialValue: 0,
 })
 const {
-	value: tags,
-	errorMessage: tagsE,
-	validate: tagsC,
-} = useField<string[]>("tags", yup.array().min(1).required(), {
-	initialValue: [],
+	value: category,
+	errorMessage: categoryE,
+	validate: categoryC,
+} = useField<string>("category", yup.string().required(), {
+	initialValue: "",
 })
 
 async function allValid(): Promise<boolean> {
-	const results = await Promise.all([nameC(), priceC(), tagsC()])
+	const results = await Promise.all([nameC(), priceC(), categoryC()])
 	if (results.some((res) => !res.valid)) return false
 	return true
 }
@@ -52,27 +52,11 @@ async function createProduct() {
 	const body = {
 		name: name.value,
 		price: price.value,
-		tags: tagOpts.value.filter(opt=>tags.value.includes(opt.name)),
+		category: category.value,
 	}
 	await itemService.create(body)
 	showToast("New product created", 2000)
 	router.push({ name: "itemList" })
-}
-
-// Tags select
-function onTagSelect(ev: Event) {
-	const el = ev.target as HTMLSelectElement
-	const tag = el.options[el.selectedIndex].value
-	const selectedOpt = tagOpts.value.find((opt) => opt.name == tag)
-	if (
-		selectedOpt == undefined ||
-		tags.value.some((tag) => tag == selectedOpt.name)
-	)
-		return
-	tags.value.push(selectedOpt.name)
-}
-function removeTag(idx: number) {
-	tags.value.splice(idx, 1)
 }
 </script>
 
@@ -124,27 +108,19 @@ function removeTag(idx: number) {
 				</label>
 				<select
 					class="select select-bordered w-full"
-					:class="{ 'select-error': !!tagsE }"
-					@change="onTagSelect"
+					:class="{ 'select-error': !!categoryE }"
+					v-model="category"
 				>
 					<option hidden selected></option>
-					<option v-for="opt in tagOpts" :value="opt.name">
+					<option v-for="opt in tagOpts" :value="opt.id">
 						{{ opt.name }}
 					</option>
 				</select>
 				<label class="label">
-					<span class="label-text-alt" v-if="tagsE">{{ tagsE }}</span>
+					<span class="label-text-alt" v-if="categoryE">{{
+						categoryE
+					}}</span>
 				</label>
-			</div>
-			<div class="flex flex-wrap gap-4">
-				<div
-					class="badge badge-success gap-2 cursor-pointer"
-					v-for="(tag, i) in tags"
-					@click="removeTag(i)"
-				>
-					{{ tag }}
-					<XMarkIcon class="h-4 w-6" />
-				</div>
 			</div>
 			<!-- spacer -->
 			<div class="w-full h-24"></div>

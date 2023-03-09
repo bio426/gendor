@@ -1,22 +1,22 @@
-import base from "./_base"
-import { IAdminTag } from "../interfaces/admin"
+import pb from "./_base"
+import { ICategory, ICreateCategory } from "../interfaces/admin"
 
-const prefix = "admin"
+const CategoriesColl = pb.collection("product_categories")
 
 async function getTags() {
-	const res = await base.get(prefix + "/tag")
+	const res = await CategoriesColl.getList(1, 20)
 
-	return res.json<IAdminTag[]>()
+	return res.items.map<ICategory>((item) => ({
+		id: item["id"],
+		name: item["name"],
+		color: item["color"],
+	}))
 }
-async function createTag(body: IAdminTag) {
-	const res = await base.post(prefix + "/tag", { json: body })
-
-	return res.status
+async function createTag(body: ICreateCategory) {
+	await CategoriesColl.create(body)
 }
-async function deleteTag(body: { name: string }) {
-	const res = await base.delete(prefix + "/tag", { json: body })
-
-	return res.status
+async function deleteTag(id: string) {
+	await CategoriesColl.delete(id)
 }
 
 export default {

@@ -73,11 +73,78 @@
           "max": 50,
           "pattern": ""
         }
+      },
+      {
+        "id": "htsthusv",
+        "name": "price",
+        "type": "number",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null
+        }
+      },
+      {
+        "id": "2gprx1gv",
+        "name": "category",
+        "type": "relation",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "collectionId": "5134kc4aorsgous",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
       }
     ],
-    "listRule": null,
-    "viewRule": null,
-    "createRule": null,
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "",
+    "updateRule": null,
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "5134kc4aorsgous",
+    "name": "product_categories",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "id": "udqqbi21",
+        "name": "name",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "id": "jwp72z9e",
+        "name": "color",
+        "type": "text",
+        "system": false,
+        "required": true,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      }
+    ],
+    "listRule": "",
+    "viewRule": "",
+    "createRule": "",
     "updateRule": null,
     "deleteRule": null,
     "options": {}
