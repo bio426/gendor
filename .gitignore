@@ -25,3 +25,7 @@ dist-ssr
 
 # Custom
 env.sh
+
+pb/pocketbase
+pb/pb_data
+pb/pb_migrations
