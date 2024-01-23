@@ -1,0 +1,447 @@
+[
+  {
+    "id": 1,
+    "brand": "Seat",
+    "model": "Alhambra"
+  },
+  {
+    "id": 2,
+    "brand": "Seat",
+    "model": "Altea"
+  },
+  {
+    "id": 3,
+    "brand": "Seat",
+    "model": "Altea XL"
+  },
+  {
+    "id": 4,
+    "brand": "Seat",
+    "model": "Arosa"
+  },
+  {
+    "id": 5,
+    "brand": "Seat",
+    "model": "Cordoba"
+  },
+  {
+    "id": 6,
+    "brand": "Seat",
+    "model": "Cordoba Vario"
+  },
+  {
+    "id": 7,
+    "brand": "Seat",
+    "model": "Exeo"
+  },
+  {
+    "id": 8,
+    "brand": "Seat",
+    "model": "Ibiza"
+  },
+  {
+    "id": 9,
+    "brand": "Seat",
+    "model": "Ibiza ST"
+  },
+  {
+    "id": 10,
+    "brand": "Seat",
+    "model": "Exeo ST"
+  },
+  {
+    "id": 11,
+    "brand": "Seat",
+    "model": "Leon"
+  },
+  {
+    "id": 12,
+    "brand": "Seat",
+    "model": "Leon ST"
+  },
+  {
+    "id": 13,
+    "brand": "Seat",
+    "model": "Inca"
+  },
+  {
+    "id": 14,
+    "brand": "Seat",
+    "model": "Mii"
+  },
+  {
+    "id": 15,
+    "brand": "Seat",
+    "model": "Toledo"
+  },
+  {
+    "id": 16,
+    "brand": "Renault",
+    "model": "Captur"
+  },
+  {
+    "id": 17,
+    "brand": "Renault",
+    "model": "Clio"
+  },
+  {
+    "id": 18,
+    "brand": "Renault",
+    "model": "Clio Grandtour"
+  },
+  {
+    "id": 19,
+    "brand": "Renault",
+    "model": "Espace"
+  },
+  {
+    "id": 20,
+    "brand": "Renault",
+    "model": "Express"
+  },
+  {
+    "id": 21,
+    "brand": "Renault",
+    "model": "Fluence"
+  },
+  {
+    "id": 22,
+    "brand": "Renault",
+    "model": "Grand Espace"
+  },
+  {
+    "id": 23,
+    "brand": "Renault",
+    "model": "Grand Modus"
+  },
+  {
+    "id": 24,
+    "brand": "Renault",
+    "model": "Grand Scenic"
+  },
+  {
+    "id": 25,
+    "brand": "Renault",
+    "model": "Kadjar"
+  },
+  {
+    "id": 26,
+    "brand": "Renault",
+    "model": "Kangoo"
+  },
+  {
+    "id": 27,
+    "brand": "Renault",
+    "model": "Kangoo Express"
+  },
+  {
+    "id": 28,
+    "brand": "Renault",
+    "model": "Koleos"
+  },
+  {
+    "id": 29,
+    "brand": "Renault",
+    "model": "Laguna"
+  },
+  {
+    "id": 30,
+    "brand": "Renault",
+    "model": "Laguna Grandtour"
+  },
+  {
+    "id": 31,
+    "brand": "Renault",
+    "model": "Latitude"
+  },
+  {
+    "id": 32,
+    "brand": "Renault",
+    "model": "Mascott"
+  },
+  {
+    "id": 33,
+    "brand": "Renault",
+    "model": "Mégane"
+  },
+  {
+    "id": 34,
+    "brand": "Renault",
+    "model": "Mégane CC"
+  },
+  {
+    "id": 35,
+    "brand": "Renault",
+    "model": "Mégane Combi"
+  },
+  {
+    "id": 36,
+    "brand": "Renault",
+    "model": "Mégane Grandtour"
+  },
+  {
+    "id": 37,
+    "brand": "Renault",
+    "model": "Mégane Coupé"
+  },
+  {
+    "id": 38,
+    "brand": "Renault",
+    "model": "Mégane Scénic"
+  },
+  {
+    "id": 39,
+    "brand": "Renault",
+    "model": "Scénic"
+  },
+  {
+    "id": 40,
+    "brand": "Renault",
+    "model": "Talisman"
+  },
+  {
+    "id": 41,
+    "brand": "Renault",
+    "model": "Talisman Grandtour"
+  },
+  {
+    "id": 42,
+    "brand": "Renault",
+    "model": "Thalia"
+  },
+  {
+    "id": 43,
+    "brand": "Renault",
+    "model": "Twingo"
+  },
+  {
+    "id": 44,
+    "brand": "Renault",
+    "model": "Wind"
+  },
+  {
+    "id": 45,
+    "brand": "Renault",
+    "model": "Zoé"
+  },
+  {
+    "id": 46,
+    "brand": "Peugeot",
+    "model": "1007"
+  },
+  {
+    "id": 47,
+    "brand": "Peugeot",
+    "model": "107"
+  },
+  {
+    "id": 48,
+    "brand": "Peugeot",
+    "model": "106"
+  },
+  {
+    "id": 49,
+    "brand": "Peugeot",
+    "model": "108"
+  },
+  {
+    "id": 50,
+    "brand": "Peugeot",
+    "model": "2008"
+  },
+  {
+    "id": 51,
+    "brand": "Peugeot",
+    "model": "205"
+  },
+  {
+    "id": 52,
+    "brand": "Peugeot",
+    "model": "205 Cabrio"
+  },
+  {
+    "id": 53,
+    "brand": "Peugeot",
+    "model": "206"
+  },
+  {
+    "id": 54,
+    "brand": "Peugeot",
+    "model": "206 CC"
+  },
+  {
+    "id": 55,
+    "brand": "Peugeot",
+    "model": "206 SW"
+  },
+  {
+    "id": 56,
+    "brand": "Peugeot",
+    "model": "207"
+  },
+  {
+    "id": 57,
+    "brand": "Peugeot",
+    "model": "207 CC"
+  },
+  {
+    "id": 58,
+    "brand": "Peugeot",
+    "model": "207 SW"
+  },
+  {
+    "id": 59,
+    "brand": "Peugeot",
+    "model": "306"
+  },
+  {
+    "id": 60,
+    "brand": "Peugeot",
+    "model": "307"
+  },
+  {
+    "id": 61,
+    "brand": "Peugeot",
+    "model": "307 CC"
+  },
+  {
+    "id": 62,
+    "brand": "Peugeot",
+    "model": "307 SW"
+  },
+  {
+    "id": 63,
+    "brand": "Peugeot",
+    "model": "308"
+  },
+  {
+    "id": 64,
+    "brand": "Peugeot",
+    "model": "308 CC"
+  },
+  {
+    "id": 65,
+    "brand": "Peugeot",
+    "model": "308 SW"
+  },
+  {
+    "id": 66,
+    "brand": "Peugeot",
+    "model": "309"
+  },
+  {
+    "id": 67,
+    "brand": "Peugeot",
+    "model": "4007"
+  },
+  {
+    "id": 68,
+    "brand": "Peugeot",
+    "model": "4008"
+  },
+  {
+    "id": 69,
+    "brand": "Peugeot",
+    "model": "405"
+  },
+  {
+    "id": 70,
+    "brand": "Peugeot",
+    "model": "406"
+  },
+  {
+    "id": 71,
+    "brand": "Peugeot",
+    "model": "407"
+  },
+  {
+    "id": 72,
+    "brand": "Peugeot",
+    "model": "407 SW"
+  },
+  {
+    "id": 73,
+    "brand": "Peugeot",
+    "model": "5008"
+  },
+  {
+    "id": 74,
+    "brand": "Peugeot",
+    "model": "508"
+  },
+  {
+    "id": 75,
+    "brand": "Peugeot",
+    "model": "508 SW"
+  },
+  {
+    "id": 76,
+    "brand": "Peugeot",
+    "model": "605"
+  },
+  {
+    "id": 77,
+    "brand": "Peugeot",
+    "model": "806"
+  },
+  {
+    "id": 78,
+    "brand": "Peugeot",
+    "model": "607"
+  },
+  {
+    "id": 79,
+    "brand": "Peugeot",
+    "model": "807"
+  },
+  {
+    "id": 80,
+    "brand": "Peugeot",
+    "model": "Bipper"
+  },
+  {
+    "id": 81,
+    "brand": "Peugeot",
+    "model": "RCZ"
+  },
+  {
+    "id": 82,
+    "brand": "Dacia",
+    "model": "Dokker"
+  },
+  {
+    "id": 83,
+    "brand": "Dacia",
+    "model": "Duster"
+  },
+  {
+    "id": 84,
+    "brand": "Dacia",
+    "model": "Lodgy"
+  },
+  {
+    "id": 85,
+    "brand": "Dacia",
+    "model": "Logan"
+  },
+  {
+    "id": 86,
+    "brand": "Dacia",
+    "model": "Logan MCV"
+  },
+  {
+    "id": 87,
+    "brand": "Dacia",
+    "model": "Logan Van"
+  },
+  {
+    "id": 88,
+    "brand": "Dacia",
+    "model": "Sandero"
+  },
+  {
+    "id": 89,
+    "brand": "Dacia",
+    "model": "Solenza"
+  }
+]
