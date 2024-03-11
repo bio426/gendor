@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/go-playground/validator/v10"
@@ -10,17 +11,6 @@ import (
 	"github.com/bio426/gendor/datasource"
 	"github.com/bio426/gendor/route"
 )
-
-type CustomValidator struct {
-	validator *validator.Validate
-}
-
-func (cv *CustomValidator) Validate(i interface{}) error {
-	if err := cv.validator.Struct(i); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
-	return nil
-}
 
 func main() {
 	datasource.InitConfig()
@@ -39,17 +29,30 @@ func main() {
 		}))
 	} else {
 		e.Debug = true
-		e.Use(middleware.CORS())
-		e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-			Format: "method=${method}, uri=${uri}, status=${status}\n",
+		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+			AllowOrigins:     []string{"http://localhost:5173"},
+			AllowCredentials: true,
+		}))
+
+		e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
+			LogMethod:   true,
+			LogURI:      true,
+			LogStatus:   true,
+			LogError:    true,
+			HandleError: true,
+			LogValuesFunc: func(c echo.Context, v middleware.RequestLoggerValues) error {
+				if v.Error == nil {
+					fmt.Printf("%s %s %d\n", v.Method, v.URI, v.Status)
+				} else {
+					fmt.Printf("%s %s %d %s\n", v.Method, v.URI, v.Status, v.Error.Error())
+				}
+				return nil
+			},
 		}))
 	}
 
 	// Routes
-	route.RegisterApi(e)
-	e.GET("", func(c echo.Context) error {
-		return c.String(200, "main")
-	})
+	route.RegisterRest(e)
 
 	// Start server
 	if datasource.Config.PROD {
@@ -57,4 +60,15 @@ func main() {
 	} else {
 		e.Logger.Fatal(e.Start(":1323"))
 	}
+}
+
+type CustomValidator struct {
+	validator *validator.Validate
+}
+
+func (cv *CustomValidator) Validate(i interface{}) error {
+	if err := cv.validator.Struct(i); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
+	}
+	return nil
 }

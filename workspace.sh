@@ -16,6 +16,6 @@ window=3
 tmux new-window -t $session:$window -n 'run'
 tmux send-keys -t $session:$window 'cd ~/Desktop/gendor/ui && npm run dev' C-m
 tmux split-window -v
-tmux send-keys -t $session:$window 'cd ~/Desktop/gendor && source env.sh && air' C-m
+tmux send-keys -t $session:$window 'cd ~/Desktop/gendor && source env.sh && wgo run main.go' C-m
 
 tmux attach-session -t $session
