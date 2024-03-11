@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import {} from "vue"
+import { } from "vue"
 
-import Toast from "@/components/Toast.vue"
-import Confirmation from "@/components/Confirmation.vue"
+import Toast from "@/component/Toast.vue"
+import Confirmation from "@/component/Confirmation.vue"
 </script>
 
 <template>
-	<div>
-		<router-view />
-		<Toast />
-		<Confirmation />
-	</div>
+    <div>
+        <router-view />
+        <Toast />
+        <Confirmation />
+    </div>
 </template>

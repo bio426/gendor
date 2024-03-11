@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from "vue"
 
-import Header from "@/components/Header.vue"
+import Header from "@/component/Header.vue"
 </script>
 
 <template>

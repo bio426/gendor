@@ -6,7 +6,7 @@ import {
 	XCircleIcon,
 } from "@heroicons/vue/24/solid"
 
-import useToast from "../composables/useToast"
+import useToast from "../composable/useToast"
 
 const { toasts } = useToast()
 
