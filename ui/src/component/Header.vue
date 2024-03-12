@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { } from "vue"
 import { useRouter } from "vue-router"
-import { Bars3Icon, HomeIcon, CubeIcon, BuildingStorefrontIcon, UserIcon } from "@heroicons/vue/24/solid"
+import { Bars3Icon, HomeIcon, WrenchScrewdriverIcon, UserIcon } from "@heroicons/vue/24/solid"
 
 import authService from "@/service/auth"
 import useAuthStore from "@/store/auth"
@@ -44,9 +44,9 @@ async function logout() {
                     <!-- Admin user modules -->
                     <template v-if="authStore.user?.role == 'admin'">
                         <li>
-                            <router-link active-class="active" :to="{ name: 'dashboard' }">
-                                <CubeIcon class="w-4" />
-                                Product
+                            <router-link active-class="active" :to="{ name: 'workshop' }">
+                                <WrenchScrewdriverIcon class="w-4" />
+                                Workshop
                             </router-link>
                         </li>
                     </template>

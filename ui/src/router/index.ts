@@ -5,6 +5,7 @@ import useAuthStore from "@/store/auth"
 import useToast from "@/composable/useToast"
 import product from "./product"
 import user from "./user"
+import workshop from "./workshop"
 
 const routes: RouteRecordRaw[] = [
     {
@@ -24,6 +25,7 @@ const routes: RouteRecordRaw[] = [
     },
     product,
     user,
+    workshop,
 ]
 
 const router = createRouter({
