@@ -1,14 +1,11 @@
 <script setup lang="ts">
 import { computed, ref, watch } from "vue"
 
-import vehiclesData from "@/assets/vehicles.json"
-import productService from "@/services/product"
 import Modal from "../Modal.vue"
 import Overlay from "../Overlay.vue"
-import type * as tProduct from "@/types/product"
 
-const props = defineProps<{ show: boolean; vehicles: tProduct.Vehicle[] }>()
-const emit = defineEmits<{ close: []; update: [tProduct.Vehicle[]] }>()
+const props = defineProps<{ show: boolean; vehicles: any[] }>()
+const emit = defineEmits<{ close: []; update: [any[]] }>()
 
 const active = ref(false)
 watch(
@@ -32,15 +29,10 @@ const loading = ref(false)
 
 const name = ref("")
 
-type CheckVehicle = tProduct.Vehicle & { check: boolean }
-const vehicleOpts = ref<CheckVehicle[]>([])
+const vehicleOpts = ref<any[]>([])
 async function getVehicleOpts() {
 	loading.value = true
 	const alreadyMarked = props.vehicles.map((v) => v.id)
-	vehicleOpts.value = vehiclesData.map((v) => ({
-		...v,
-		check: alreadyMarked.includes(v.id),
-	}))
 	loading.value = false
 }
 
@@ -54,14 +46,6 @@ const onlySelected = ref(false)
 const selectedCount = computed(
 	() => vehicleOpts.value.filter((v) => v.check).length
 )
-const filteredVehicleOpts = computed(() => {
-	// const res: CheckVehicle[] = [...vehicleOpts.value]
-	const res: CheckVehicle[] = Array.from(vehicleOpts.value)
-	if (onlySelected.value) {
-		return res.filter((v) => v.check)
-	}
-	return res
-})
 </script>
 
 <template>
@@ -101,25 +85,7 @@ const filteredVehicleOpts = computed(() => {
 							<th>Brand</th>
 						</tr>
 					</thead>
-					<tbody>
-						<tr
-							v-for="vehicle in filteredVehicleOpts"
-							:key="vehicle.id"
-						>
-							<td>
-								<label>
-									<input
-										type="checkbox"
-										class="checkbox"
-										:value="vehicle.check"
-										@change="toogleOptCheck(vehicle.id)"
-									/>
-								</label>
-							</td>
-							<td>{{ vehicle.model }}</td>
-							<td>{{ vehicle.brand }}</td>
-						</tr>
-					</tbody>
+					<tbody></tbody>
 				</table>
 			</div>
 		</Overlay>

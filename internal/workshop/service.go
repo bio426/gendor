@@ -3,16 +3,126 @@ package workshop
 import (
 	"context"
 	"database/sql"
+	"fmt"
 
 	"github.com/bio426/gendor/datasource"
 	"github.com/bio426/gendor/internal/core"
+	"github.com/bio426/gendor/util"
 )
 
 type WorkshopSvc core.Service
 
-func (svc *WorkshopSvc) List(c context.Context) error {
-	datasource.Postgres.Query("")
-	return nil
+type SvcListParams struct {
+	Search string
+	Page   int32
+}
+
+func (svc *WorkshopSvc) List(c context.Context, params SvcListParams) (*CtlListResponse, error) {
+	var totalRows int32
+	row := datasource.Postgres.QueryRowContext(
+		c,
+		"select count(*) from workshop_orders where name ilike $1",
+		fmt.Sprintf("%%%s%%", params.Search),
+	)
+	if err := row.Scan(&totalRows); err != nil {
+		return nil, err
+	}
+
+	rows, err := datasource.Postgres.QueryContext(
+		c,
+		"select id,name,plate,created_at from workshop_orders where plate ilike $1 order by created_at desc limit 20 offset $2",
+		fmt.Sprintf("%%%s%%", params.Search),
+		(params.Page-1)*20,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	resRows := []CtlListRow{}
+	for rows.Next() {
+		var row = CtlListRow{}
+		if err = rows.Scan(
+			&row.Id,
+			&row.Name,
+			&row.Plate,
+			&row.CreatedAt,
+		); err != nil {
+			return nil, err
+		}
+		resRows = append(resRows, row)
+	}
+
+	from, to := util.DataFromTo(totalRows, params.Page, 20)
+	res := &CtlListResponse{
+		Total: totalRows,
+		From:  from,
+		To:    to,
+		Rows:  resRows,
+	}
+
+	return res, nil
+}
+
+func (svc *WorkshopSvc) Detail(c context.Context, id int32) (*CtlDetailResponse, error) {
+	tx, err := datasource.Postgres.BeginTx(c, nil)
+	if err != nil {
+		return nil, err
+	}
+	defer tx.Rollback()
+
+	res := &CtlDetailResponse{Items: []CtlDetailItem{}}
+	// get order
+	row := datasource.Postgres.QueryRowContext(
+		c,
+		"select id,name,address,dni,ruc,created_at,brand,model,color,plate,mileage,observation from workshop_orders where id = $1",
+		id,
+	)
+	if err := row.Scan(
+		&res.Id,
+		&res.Name,
+		&res.Address,
+		&res.Dni,
+		&res.Ruc,
+		&res.CreatedAt,
+		&res.Brand,
+		&res.Model,
+		&res.Color,
+		&res.Plate,
+		&res.Mileage,
+		&res.Observation,
+	); err != nil {
+		return nil, err
+	}
+
+	rows, err := datasource.Postgres.QueryContext(
+		c,
+		"select code,quantity,price,description from workshop_order_items where orderId = $1",
+		id,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var row = CtlDetailItem{}
+		if err = rows.Scan(
+			&row.Code,
+			&row.Quantity,
+			&row.Price,
+			&row.Description,
+		); err != nil {
+			return nil, err
+		}
+		res.Items = append(res.Items, row)
+	}
+
+	if err = tx.Commit(); err != nil {
+		return nil, err
+	}
+
+	return res, nil
 }
 
 type SvcCreateParams struct {
@@ -24,7 +134,7 @@ type SvcCreateParams struct {
 	Model       string
 	Color       string
 	Plate       string
-	Mileage     string
+	Mileage     int32
 	Observation string
 	Items       []SvcCreateItem
 	UserId      int32
@@ -49,16 +159,16 @@ func (svc *WorkshopSvc) Create(c context.Context, params SvcCreateParams) error 
 		`
         insert into workshop_orders(
           name, address, dni, ruc, brand, model, 
-          color, plate, mileage, observation
+          color, plate, mileage, observation, userId
         ) 
         values 
-          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
         returning id
         `,
 		params.Name, params.Address, params.Dni,
 		params.Ruc, params.Brand, params.Model,
 		params.Color, params.Plate, params.Mileage,
-		params.Observation,
+		params.Observation, params.UserId,
 	)
 	var orderId int32
 	if err := row.Scan(&orderId); err != nil {
@@ -99,22 +209,21 @@ func (svc *WorkshopSvc) SearchByPlate(c context.Context, plate string) (*CtlSear
 		`
         select 
           name, address, dni, ruc, brand, 
-          model, color, mileage, observation 
+          model, color, mileage 
         from 
           workshop_orders 
         where 
-          plate = $1 
+          plate ilike $1
         order by 
           created_at desc 
         limit 
           1
         `,
-		plate,
+		fmt.Sprintf("%%%s%%", plate),
 	)
 	if err := row.Scan(
 		&res.Name, &res.Address, &res.Dni, &res.Ruc,
 		&res.Brand, &res.Model, &res.Color, &res.Mileage,
-		&res.Observation,
 	); err != nil {
 		if err == sql.ErrNoRows {
 			return &CtlSearchByPlateResponse{}, nil

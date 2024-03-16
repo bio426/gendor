@@ -3,7 +3,6 @@ import type { RouteRecordRaw, RouteLocationNormalized } from "vue-router"
 
 import useAuthStore from "@/store/auth"
 import useToast from "@/composable/useToast"
-import product from "./product"
 import user from "./user"
 import workshop from "./workshop"
 
@@ -23,7 +22,6 @@ const routes: RouteRecordRaw[] = [
         name: "not-found",
         component: () => import("@/view/not-found.vue"),
     },
-    product,
     user,
     workshop,
 ]

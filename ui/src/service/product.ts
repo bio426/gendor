@@ -1,10 +1,10 @@
 import base from "./base"
-import type * as tProduct from "@/types/product"
+import type * as tProduct from "@/type/product"
 
 const prefix = "product"
 
 const productService = {
-	async create(body: tProduct.CreateProduct) {
+	async create(body: any) {
 		const formData = new FormData()
 		formData.append("name", body.name)
 		formData.append("price", body.price.toString())
@@ -33,7 +33,7 @@ const productService = {
 		const res = await base.get(prefix + "/category")
 
 		return res.json<{
-			rows: tProduct.ProductCategory[]
+			rows: any[]
 		}>()
 	},
 }

@@ -1,5 +1,4 @@
-export type Order = {
-    id?: number
+export type OrderCreate = {
     name: string
     address: string
     dni: string
@@ -20,3 +19,22 @@ export type OrderItem = {
     description: string
 }
 
+export type OrderSimple = {
+    id: number,
+    name: string,
+    plate: string,
+    createdAt: string
+}
+
+export type OrderFound = {
+    name?: string
+    address: string
+    dni: string
+    ruc: string
+    brand: string
+    model: string
+    color: string
+    mileage: number
+}
+
+export type OrderDetail = OrderCreate & { id: number, createdAt: string }

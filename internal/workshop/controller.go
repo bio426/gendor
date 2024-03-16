@@ -2,6 +2,7 @@ package workshop
 
 import (
 	"net/http"
+	"time"
 
 	"github.com/labstack/echo/v4"
 
@@ -11,13 +12,78 @@ import (
 
 type WorkshopCtl core.Controller
 
+type CtlListRow struct {
+	Id        int32     `json:"id"`
+	Name      string    `json:"name"`
+	Plate     string    `json:"plate"`
+	CreatedAt time.Time `json:"createdAt"`
+}
+
+// type CtlListResponse struct {
+// 	Rows []CtlListRow `json:"rows"`
+// }
+
+type CtlListResponse core.PaginatedResponse[CtlListRow]
+
 func (ctl *WorkshopCtl) List(c echo.Context) error {
-	err := Service.List(c.Request().Context())
+	query := struct {
+		Search string `query:"search" `
+		Page   int32  `query:"page" validate:"required"`
+	}{}
+	if err := c.Bind(&query); err != nil {
+		return err
+	}
+	if err := c.Validate(query); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest)
+	}
+
+	res, err := Service.List(c.Request().Context(), SvcListParams{Search: query.Search, Page: query.Page})
 	if err != nil {
 		return err
 	}
 
-	return c.JSON(http.StatusOK, "")
+	return c.JSON(http.StatusOK, res)
+}
+
+type CtlDetailItem struct {
+	Code        string  `json:"code"`
+	Quantity    int32   `json:"quantity"`
+	Price       float32 `json:"price"`
+	Description string  `json:"description"`
+}
+type CtlDetailResponse struct {
+	Id          int32           `json:"id,omitempty"`
+	Name        string          `json:"name,omitempty"`
+	Address     string          `json:"address,omitempty"`
+	Dni         string          `json:"dni,omitempty"`
+	Ruc         string          `json:"ruc,omitempty"`
+	CreatedAt   time.Time       `json:"createdAt,omitempty"`
+	Brand       string          `json:"brand,omitempty"`
+	Model       string          `json:"model,omitempty"`
+	Color       string          `json:"color,omitempty"`
+	Plate       string          `json:"plate,omitempty"`
+	Mileage     string          `json:"mileage,omitempty"`
+	Observation string          `json:"observation,omitempty"`
+	Items       []CtlDetailItem `json:"items,omitempty"`
+}
+
+func (ctl *WorkshopCtl) Detail(c echo.Context) error {
+	params := struct {
+		Id int32 `param:"id" validate:"required"`
+	}{}
+	if err := c.Bind(&params); err != nil {
+		return err
+	}
+	if err := c.Validate(params); err != nil {
+		return echo.NewHTTPError(http.StatusBadRequest)
+	}
+
+	res, err := Service.Detail(c.Request().Context(), params.Id)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, res)
 }
 
 func (ctl *WorkshopCtl) Create(c echo.Context) error {
@@ -30,7 +96,7 @@ func (ctl *WorkshopCtl) Create(c echo.Context) error {
 		Model       string `json:"model" validate:"required"`
 		Color       string `json:"color" validate:"required"`
 		Plate       string `json:"plate" validate:"required"`
-		Mileage     string `json:"mileage" validate:"required"`
+		Mileage     int32 `json:"mileage" validate:"required"`
 		Observation string `json:"observation" validate:"required"`
 		// Items       []SvcCreateItem `json:"Items" validate:"required"`
 		Items []struct {
@@ -80,16 +146,14 @@ func (ctl *WorkshopCtl) Create(c echo.Context) error {
 }
 
 type CtlSearchByPlateResponse struct {
-	Id          string `json:"id,omitempty" validate:"required"`
-	Name        string `json:"name,omitempty" validate:"required"`
-	Address     string `json:"address,omitempty" validate:"required"`
-	Dni         string `json:"dni,omitempty" validate:"required"`
-	Ruc         string `json:"ruc,omitempty" validate:"required"`
-	Brand       string `json:"brand,omitempty" validate:"required"`
-	Model       string `json:"model,omitempty" validate:"required"`
-	Color       string `json:"color,omitempty" validate:"required"`
-	Mileage     string `json:"mileage,omitempty" validate:"required"`
-	Observation string `json:"observation,omitempty" validate:"required"`
+	Name    string `json:"name,omitempty" validate:"required"`
+	Address string `json:"address,omitempty" validate:"required"`
+	Dni     string `json:"dni,omitempty" validate:"required"`
+	Ruc     string `json:"ruc,omitempty" validate:"required"`
+	Brand   string `json:"brand,omitempty" validate:"required"`
+	Model   string `json:"model,omitempty" validate:"required"`
+	Color   string `json:"color,omitempty" validate:"required"`
+	Mileage int32 `json:"mileage,omitempty" validate:"required"`
 }
 
 func (ctl *WorkshopCtl) SearchByPlate(c echo.Context) error {
@@ -103,12 +167,12 @@ func (ctl *WorkshopCtl) SearchByPlate(c echo.Context) error {
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
 
-	err := Service.Create(c.Request().Context(), SvcCreateParams{})
+	res, err := Service.SearchByPlate(c.Request().Context(), query.Plate)
 	if err != nil {
 		return err
 	}
 
-	return c.NoContent(http.StatusOK)
+	return c.JSON(http.StatusOK, res)
 }
 
 var Controller = &WorkshopCtl{}

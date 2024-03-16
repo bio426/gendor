@@ -15,5 +15,8 @@ func DataFromTo(total, page int32, dataLen int) (int32, int32) {
 	if from > total {
 		return 0, 0
 	}
+	if to > total {
+		to = total
+	}
 	return from, to
 }

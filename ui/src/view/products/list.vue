@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue"
 
-import productService from "@/services/product"
-import Header from "@/components/Header.vue"
-import Overlay from "@/components/Overlay.vue"
-import Pagination from "@/components/Pagination.vue"
+import productService from "@/service/product"
+import Header from "@/component/Header.vue"
+import Overlay from "@/component/Overlay.vue"
+import Pagination from "@/component/Pagination.vue"
 
 const loading = ref(false)
 const rows = ref<any[]>([])

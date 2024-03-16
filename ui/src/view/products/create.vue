@@ -2,14 +2,14 @@
 import { ref, reactive, computed } from "vue"
 import { CurrencyDollarIcon, PlusIcon } from "@heroicons/vue/24/solid"
 
-import useConfirmation from "@/composables/useConfirmation"
-import useToast from "@/composables/useToast"
-import productService from "@/services/product"
-import Header from "@/components/Header.vue"
-import Overlay from "@/components/Overlay.vue"
-import CreateProductCategory from "@/components/products/CreateProductCategory.vue"
-import ManageProductVehicles from "@/components/products/ManageProductVehicles.vue"
-import type * as tProduct from "@/types/product"
+import useConfirmation from "@/composable/useConfirmation"
+import useToast from "@/composable/useToast"
+import productService from "@/service/product"
+import Header from "@/component/Header.vue"
+import Overlay from "@/component/Overlay.vue"
+import CreateProductCategory from "@/component/products/CreateProductCategory.vue"
+import ManageProductVehicles from "@/component/products/ManageProductVehicles.vue"
+import type * as tProduct from "@/type/product"
 
 const confirmation = useConfirmation()
 const toasts = useToast()
@@ -35,7 +35,7 @@ function setFormImage(e: Event) {
 	}
 }
 
-const categoryOpts = ref<tProduct.ProductCategory[]>([])
+const categoryOpts = ref<any[]>([])
 async function getCategoryOpts() {
 	loading.value = true
 	const data = await productService.listProductCategories()
@@ -45,7 +45,7 @@ async function getCategoryOpts() {
 getCategoryOpts()
 
 async function create() {
-	if (!(await confirmation.confirm())) return
+	if (!(await confirmation.display({}))) return
 	if (form.image == undefined) return
 	loading.value = true
 	await productService.create({
@@ -54,7 +54,7 @@ async function create() {
 		image: form.image,
 	})
 	loading.value = false
-	toasts.showToast("Creado", 2000)
+	toasts.display({ message: "adasd" })
 }
 
 const vehicles = ref<{ id: number; model: string; brand: string }[]>([])

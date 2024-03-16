@@ -14,8 +14,11 @@ import (
 
 func main() {
 	datasource.InitConfig()
-	datasource.InitPostgres()
-	datasource.InitCloudinary()
+	err := datasource.InitPostgres()
+	if err != nil {
+		panic(err)
+	}
+	// datasource.InitCloudinary()
 
 	e := echo.New()
 	e.HideBanner = true
@@ -27,13 +30,14 @@ func main() {
 			Root:  "./dist",
 			HTML5: true,
 		}))
+		e.Use(middleware.Logger())
 	} else {
 		e.Debug = true
 		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
 			AllowOrigins:     []string{"http://localhost:5173"},
 			AllowCredentials: true,
 		}))
-
+		// This logger breaks the spa middleware in prod
 		e.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 			LogMethod:   true,
 			LogURI:      true,

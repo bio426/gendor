@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, watch } from "vue"
 
-import useConfirmation from "@/composables/useConfirmation"
-import productService from "@/services/product"
+import useConfirmation from "@/composable/useConfirmation"
+import productService from "@/service/product"
 import Modal from "../Modal.vue"
 import Overlay from "../Overlay.vue"
 
