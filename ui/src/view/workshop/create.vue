@@ -87,7 +87,7 @@ async function create() {
 					>
 						<div class="form-control w-full">
 							<div class="label">
-								<label class="label-text" for="i1">Plate</label>
+								<label class="label-text" for="i1">Placa</label>
 								<span class="label-text-alt">
 									<button
 										class="btn btn-sm btn-square"
@@ -107,7 +107,7 @@ async function create() {
 						</div>
 						<label class="form-control w-full">
 							<div class="label">
-								<span class="label-text">Name</span>
+								<span class="label-text">Nombre</span>
 							</div>
 							<input
 								class="input input-bordered w-full"
@@ -117,7 +117,7 @@ async function create() {
 						</label>
 						<label class="form-control w-full">
 							<div class="label">
-								<span class="label-text">Address</span>
+								<span class="label-text">Direccion</span>
 							</div>
 							<input
 								class="input input-bordered w-full"
@@ -147,7 +147,7 @@ async function create() {
 						</label>
 						<label class="form-control w-full">
 							<div class="label">
-								<span class="label-text">Brand</span>
+								<span class="label-text">Marca</span>
 							</div>
 							<input
 								class="input input-bordered w-full"
@@ -157,7 +157,7 @@ async function create() {
 						</label>
 						<label class="form-control w-full">
 							<div class="label">
-								<span class="label-text">Model</span>
+								<span class="label-text">Modelo</span>
 							</div>
 							<input
 								class="input input-bordered w-full"
@@ -177,7 +177,7 @@ async function create() {
 						</label>
 						<label class="form-control w-full">
 							<div class="label">
-								<span class="label-text">Mileage</span>
+								<span class="label-text">Kilometraje</span>
 							</div>
 							<input
 								class="input input-bordered w-full"
@@ -189,7 +189,7 @@ async function create() {
 						</label>
 						<label class="form-control w-full">
 							<div class="label">
-								<span class="label-text">Observation</span>
+								<span class="label-text">Observacion</span>
 							</div>
 							<textarea
 								class="textarea textarea-bordered w-full"
@@ -225,7 +225,7 @@ async function create() {
 						class="btn btn-block btn-primary mt-8"
 						type="submit"
 					>
-						Create
+						Crear
 					</button>
 				</form>
 			</Overlay>

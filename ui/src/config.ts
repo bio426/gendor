@@ -1,9 +1,10 @@
 const config = {
-    restUrl:
-        (import.meta.env.VITE_API_URL as string) || "http://localhost:1323/rest",
-    sseUrl:
-        (import.meta.env.VITE_SSE_URL as string) ||
-        "http://localhost:1323/event",
+	restUrl: "http://localhost:1323/rest",
+	sseUrl: "http://localhost:1323/event",
+}
+
+if (import.meta.env.PROD) {
+	config.restUrl = `/rest`
 }
 
 export default config

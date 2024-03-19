@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"strings"
 
 	"github.com/go-playground/validator/v10"
 	"github.com/labstack/echo/v4"
@@ -30,7 +31,15 @@ func main() {
 			Root:  "./dist",
 			HTML5: true,
 		}))
-		e.Use(middleware.Logger())
+		e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
+			Skipper: func(c echo.Context) bool {
+				path := c.Path()
+				if strings.Contains(path, "/rest") {
+					return false
+				}
+				return true
+			},
+		}))
 	} else {
 		e.Debug = true
 		e.Use(middleware.CORSWithConfig(middleware.CORSConfig{

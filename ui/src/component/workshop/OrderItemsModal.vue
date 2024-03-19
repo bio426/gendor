@@ -57,7 +57,7 @@ async function save() {
 
 <template>
 	<Modal
-		title="Manage Product Variants"
+		title="Cambiar items de la orden"
 		:show="props.show"
 		@closing="handleClose"
 	>
@@ -65,7 +65,7 @@ async function save() {
 			<div class="grid grid-cols-2 md:grid-cols-3 gap-4">
 				<label class="form-control w-full col-span-2 md:col-span-1">
 					<div class="label">
-						<span class="label-text">Code</span>
+						<span class="label-text">Codigo</span>
 					</div>
 					<input
 						class="input input-bordered w-full"
@@ -75,7 +75,7 @@ async function save() {
 				</label>
 				<label class="form-control w-full">
 					<div class="label">
-						<span class="label-text">Quantity</span>
+						<span class="label-text">Cantidad</span>
 					</div>
 					<input
 						class="input input-bordered w-full"
@@ -86,7 +86,7 @@ async function save() {
 				</label>
 				<label class="form-control w-full">
 					<div class="label">
-						<span class="label-text">Price</span>
+						<span class="label-text">Precio</span>
 					</div>
 					<input
 						class="input input-bordered w-full"
@@ -98,7 +98,7 @@ async function save() {
 				</label>
 				<label class="form-control w-full col-span-2 md:col-span-3">
 					<div class="label">
-						<span class="label-text">Description</span>
+						<span class="label-text">Descripcion</span>
 					</div>
 					<textarea
 						class="textarea textarea-bordered w-full"
@@ -109,7 +109,7 @@ async function save() {
 				</label>
 			</div>
 			<button class="btn btn-block btn-primary mt-8" type="submit">
-				Add
+				Agregar
 			</button>
 		</form>
 		<hr class="my-4" />
@@ -117,11 +117,11 @@ async function save() {
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Code</th>
-						<th>Description</th>
-						<th>Quantity</th>
-						<th>Price</th>
-						<th>Actions</th>
+						<th>Codigo</th>
+						<th>Descripcion</th>
+						<th>Cantidad</th>
+						<th>Precio</th>
+						<th>Accion</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -135,7 +135,7 @@ async function save() {
 						<td>
 							<button
 								class="btn btn-sm btn-square"
-								title="Delete"
+								title="Quitar"
 								@click="removeItem(idx)"
 							>
 								<TrashIcon class="w-4 fill-error" />
@@ -144,7 +144,7 @@ async function save() {
 					</tr>
 					<tr v-if="items.length == 0">
 						<td class="text-center" colspan="5">
-							No items to show
+							Aun no hay items agregados
 						</td>
 					</tr>
 				</tbody>
@@ -157,7 +157,7 @@ async function save() {
 			</table>
 		</div>
 		<button class="btn btn-block btn-primary mt-8" @click="save">
-			Save
+			Guardar
 		</button>
 	</Modal>
 </template>
