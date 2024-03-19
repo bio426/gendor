@@ -22,7 +22,7 @@ CREATE TABLE "workshop_orders" (
   "model" varchar,
   "color" varchar,
   "plate" varchar,
-  "mileage" varchar,
+  "mileage" int,
   "observation" text,
   "created_at" timestamp DEFAULT (now()),
   "user" int
@@ -34,7 +34,6 @@ CREATE TABLE "workshop_order_items" (
   "quantity" int,
   "price" float,
   "description" text,
-  "created_at" timestamp DEFAULT (now()),
   "order" int
 );
 
