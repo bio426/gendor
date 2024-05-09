@@ -61,6 +61,13 @@ func main() {
 				}
 				return nil
 			},
+			Skipper: func(c echo.Context) bool {
+				path := c.Path()
+				if strings.Contains(path, "/rest") {
+					return false
+				}
+				return true
+			},
 		}))
 	}
 

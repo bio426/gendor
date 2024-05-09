@@ -1,6 +1,7 @@
 package workshop
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -88,20 +89,19 @@ func (ctl *WorkshopCtl) Detail(c echo.Context) error {
 
 func (ctl *WorkshopCtl) Create(c echo.Context) error {
 	body := struct {
-		Name        string `json:"name" validate:"required"`
-		Address     string `json:"address" validate:"required"`
-		Dni         string `json:"dni" validate:"required"`
-		Ruc         string `json:"ruc" validate:"required"`
-		Brand       string `json:"brand" validate:"required"`
-		Model       string `json:"model" validate:"required"`
-		Color       string `json:"color" validate:"required"`
+		Name        string `json:"name"`
+		Address     string `json:"address"`
+		Dni         string `json:"dni"`
+		Ruc         string `json:"ruc"`
+		Brand       string `json:"brand"`
+		Model       string `json:"model"`
+		Color       string `json:"color"`
 		Plate       string `json:"plate" validate:"required"`
-		Mileage     int32 `json:"mileage" validate:"required"`
-		Observation string `json:"observation" validate:"required"`
-		// Items       []SvcCreateItem `json:"Items" validate:"required"`
-		Items []struct {
-			Code        string  `json:"code" validate:"required"`
-			Quantity    int32   `json:"quantity" validate:"required"`
+		Mileage     int32  `json:"mileage"`
+		Observation string `json:"observation"`
+		Items       []struct {
+			Code        string  `json:"code"`
+			Quantity    int32   `json:"quantity"`
 			Price       float32 `json:"price" validate:"required"`
 			Description string  `json:"description" validate:"required"`
 		} `json:"items" validate:"required,min=1"`
@@ -110,6 +110,7 @@ func (ctl *WorkshopCtl) Create(c echo.Context) error {
 		return err
 	}
 	if err := c.Validate(body); err != nil {
+		fmt.Println(err)
 		return echo.NewHTTPError(http.StatusBadRequest)
 	}
 	userId := c.Get(auth.CtxUserIdKey).(int32)
@@ -153,7 +154,7 @@ type CtlSearchByPlateResponse struct {
 	Brand   string `json:"brand,omitempty" validate:"required"`
 	Model   string `json:"model,omitempty" validate:"required"`
 	Color   string `json:"color,omitempty" validate:"required"`
-	Mileage int32 `json:"mileage,omitempty" validate:"required"`
+	Mileage int32  `json:"mileage,omitempty" validate:"required"`
 }
 
 func (ctl *WorkshopCtl) SearchByPlate(c echo.Context) error {
