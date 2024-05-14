@@ -3,7 +3,6 @@ import { ref, reactive } from "vue"
 import { useRouter } from "vue-router"
 import { MagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/vue/24/solid"
 
-import * as tWorkshop from "@/type/workshop"
 import useToast from "@/composable/useToast"
 import workshopService from "@/service/workshop"
 import Overlay from "@/component/Overlay.vue"
@@ -65,7 +64,7 @@ async function create() {
 		ruc: form.ruc,
 		brand: form.brand,
 		model: form.model,
-		color: form.plate,
+		color: form.color,
 		plate: form.plate,
 		mileage: form.mileage,
 		observation: form.observation,

@@ -53,18 +53,18 @@ type CtlDetailItem struct {
 	Description string  `json:"description"`
 }
 type CtlDetailResponse struct {
-	Id          int32           `json:"id,omitempty"`
-	Name        string          `json:"name,omitempty"`
-	Address     string          `json:"address,omitempty"`
-	Dni         string          `json:"dni,omitempty"`
-	Ruc         string          `json:"ruc,omitempty"`
-	CreatedAt   time.Time       `json:"createdAt,omitempty"`
-	Brand       string          `json:"brand,omitempty"`
-	Model       string          `json:"model,omitempty"`
-	Color       string          `json:"color,omitempty"`
-	Plate       string          `json:"plate,omitempty"`
-	Mileage     string          `json:"mileage,omitempty"`
-	Observation string          `json:"observation,omitempty"`
+	Id          int32           `json:"id"`
+	Name        string          `json:"name"`
+	Address     string          `json:"address"`
+	Dni         string          `json:"dni"`
+	Ruc         string          `json:"ruc"`
+	CreatedAt   time.Time       `json:"createdAt"`
+	Brand       string          `json:"brand"`
+	Model       string          `json:"model"`
+	Color       string          `json:"color"`
+	Plate       string          `json:"plate"`
+	Mileage     int32           `json:"mileage"`
+	Observation string          `json:"observation"`
 	Items       []CtlDetailItem `json:"items,omitempty"`
 }
 

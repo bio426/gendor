@@ -61,7 +61,7 @@ async function printOrder(id: number) {
 		model: res.model,
 		color: res.color,
 		plate: res.plate,
-		mileage: `${res.mileage} KM`,
+		mileage: res.mileage ? `${res.mileage} KM` : "",
 		observation: res.observation,
 		subtotal: total.toFixed(2),
 		total: total.toFixed(2),

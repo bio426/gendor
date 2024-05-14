@@ -3,6 +3,12 @@
 - docker build -t vugopo .
 - docker run --rm -it -p 8080:8080 vugopo
 
+## Deploy steps
+
+- docker build -t us-central1-docker.pkg.dev/gendor-417403/app/server .
+- docker push us-central1-docker.pkg.dev/gendor-417403/app/server
+- implementar nueva revision en la instancia de cloud run con la nueva imagen
+
 ## Example env
 
 ```bash
