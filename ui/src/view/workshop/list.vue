@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue"
 import { PrinterIcon, ClipboardIcon } from "@heroicons/vue/24/solid"
+import { PDFDocument, StandardFonts } from "pdf-lib"
 
 import * as tWorkshop from "@/type/workshop"
 import workshopService from "@/service/workshop"
@@ -76,6 +77,10 @@ async function printOrder(id: number) {
 	win.focus()
 	win.print()
 	win.close()
+}
+
+async function printOrderPdf(id: number) {
+	await printUtil.printWithPdf()
 }
 
 async function orderToClipboard(id: number) {
@@ -177,6 +182,13 @@ async function orderToClipboard(id: number) {
 											class="btn btn-xs btn-square"
 											title="Imprimir"
 											@click="printOrder(row.id)"
+										>
+											<PrinterIcon class="w-4 y-4" />
+										</button>
+										<button
+											class="btn btn-xs btn-warning btn-square"
+											title="Imprimir"
+											@click="printOrderPdf(row.id)"
 										>
 											<PrinterIcon class="w-4 y-4" />
 										</button>

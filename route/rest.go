@@ -24,8 +24,8 @@ func RegisterRest(app *echo.Echo) {
 	workshopRouter := restRouter.Group("/workshop")
 	workshopRouter.Use(auth.Middleware, auth.MiddlewareWithRoles([]string{"admin"}))
 	workshopRouter.GET("", workshop.Controller.List)
-    workshopRouter.GET("/search-plate", workshop.Controller.SearchByPlate)
-    workshopRouter.GET("/:id", workshop.Controller.Detail)
+	workshopRouter.GET("/search-plate", workshop.Controller.SearchByPlate)
+	workshopRouter.GET("/:id", workshop.Controller.Detail)
 	workshopRouter.POST("", workshop.Controller.Create)
 
 	productsRouter := restRouter.Group("/product")
