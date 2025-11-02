@@ -21,7 +21,7 @@ func (svc *WorkshopSvc) List(c context.Context, params SvcListParams) (*CtlListR
 	var totalRows int32
 	row := datasource.Postgres.QueryRowContext(
 		c,
-		"select count(*) from workshop_orders where name ilike $1",
+		"select count(*) from workshop_orders where propietary ilike $1",
 		fmt.Sprintf("%%%s%%", params.Search),
 	)
 	if err := row.Scan(&totalRows); err != nil {
@@ -30,7 +30,7 @@ func (svc *WorkshopSvc) List(c context.Context, params SvcListParams) (*CtlListR
 
 	rows, err := datasource.Postgres.QueryContext(
 		c,
-		"select id,name,plate,created_at from workshop_orders where plate ilike $1 order by created_at desc limit 20 offset $2",
+		"select id,propietary,plate,created_at from workshop_orders where plate ilike $1 order by created_at desc limit 20 offset $2",
 		fmt.Sprintf("%%%s%%", params.Search),
 		(params.Page-1)*20,
 	)
@@ -44,7 +44,7 @@ func (svc *WorkshopSvc) List(c context.Context, params SvcListParams) (*CtlListR
 		var row = CtlListRow{}
 		if err = rows.Scan(
 			&row.Id,
-			&row.Name,
+			&row.Propietary,
 			&row.Plate,
 			&row.CreatedAt,
 		); err != nil {
@@ -75,29 +75,27 @@ func (svc *WorkshopSvc) Detail(c context.Context, id int32) (*CtlDetailResponse,
 	// get order
 	row := datasource.Postgres.QueryRowContext(
 		c,
-		"select id,name,address,dni,ruc,created_at,brand,model,color,plate,mileage,observation from workshop_orders where id = $1",
+		"select id,propietary,created_at,brand,model,car_year,plate,mileage,observation,discount from workshop_orders where id = $1",
 		id,
 	)
 	if err := row.Scan(
 		&res.Id,
-		&res.Name,
-		&res.Address,
-		&res.Dni,
-		&res.Ruc,
+		&res.Propietary,
 		&res.CreatedAt,
 		&res.Brand,
 		&res.Model,
-		&res.Color,
+		&res.Year,
 		&res.Plate,
 		&res.Mileage,
 		&res.Observation,
+		&res.Discount,
 	); err != nil {
 		return nil, err
 	}
 
 	rows, err := datasource.Postgres.QueryContext(
 		c,
-		"select code,quantity,price,description from workshop_order_items where orderId = $1",
+		"select price,description from workshop_order_items where orderId = $1",
 		id,
 	)
 	if err != nil {
@@ -108,8 +106,6 @@ func (svc *WorkshopSvc) Detail(c context.Context, id int32) (*CtlDetailResponse,
 	for rows.Next() {
 		var row = CtlDetailItem{}
 		if err = rows.Scan(
-			&row.Code,
-			&row.Quantity,
 			&row.Price,
 			&row.Description,
 		); err != nil {
@@ -126,22 +122,18 @@ func (svc *WorkshopSvc) Detail(c context.Context, id int32) (*CtlDetailResponse,
 }
 
 type SvcCreateParams struct {
-	Name        string
-	Address     string
-	Dni         string
-	Ruc         string
+	Propietary  string
 	Brand       string
 	Model       string
-	Color       string
+	Year        int32
 	Plate       string
 	Mileage     int32
 	Observation string
+	Discount    float32
 	Items       []SvcCreateItem
 	UserId      int32
 }
 type SvcCreateItem struct {
-	Code        string
-	Quantity    int32
 	Price       float32
 	Description string
 }
@@ -158,17 +150,16 @@ func (svc *WorkshopSvc) Create(c context.Context, params SvcCreateParams) error 
 		c,
 		`
         insert into workshop_orders(
-          name, address, dni, ruc, brand, model, 
-          color, plate, mileage, observation, userId
+          propietary, brand, model, car_year, 
+          plate, mileage, observation, discount, userId
         ) 
         values 
-          ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+          ($1,$2,$3,$4,$5,$6,$7,$8,$9)
         returning id
         `,
-		params.Name, params.Address, params.Dni,
-		params.Ruc, params.Brand, params.Model,
-		params.Color, params.Plate, params.Mileage,
-		params.Observation, params.UserId,
+		params.Propietary, params.Brand, params.Model,
+		params.Year, params.Plate, params.Mileage,
+		params.Observation, params.Discount, params.UserId,
 	)
 	var orderId int32
 	if err := row.Scan(&orderId); err != nil {
@@ -180,17 +171,17 @@ func (svc *WorkshopSvc) Create(c context.Context, params SvcCreateParams) error 
 		c,
 		`
         insert into workshop_order_items(
-          code, quantity, price, description, orderId
+          price, description, orderId
         ) 
         values 
-          ($1,$2,$3,$4,$5)
+          ($1,$2,$3)
         `,
 	)
 	if err != nil {
 		return err
 	}
 	for _, item := range params.Items {
-		_, err = stmt.ExecContext(c, item.Code, item.Quantity, item.Price, item.Description, orderId)
+		_, err = stmt.ExecContext(c, item.Price, item.Description, orderId)
 		if err != nil {
 			return err
 		}
@@ -208,8 +199,8 @@ func (svc *WorkshopSvc) SearchByPlate(c context.Context, plate string) (*CtlSear
 	row := datasource.Postgres.QueryRowContext(c,
 		`
         select 
-          name, address, dni, ruc, brand, 
-          model, color, mileage 
+          propietary, brand, 
+          model, car_year, mileage 
         from 
           workshop_orders 
         where 
@@ -222,8 +213,8 @@ func (svc *WorkshopSvc) SearchByPlate(c context.Context, plate string) (*CtlSear
 		fmt.Sprintf("%%%s%%", plate),
 	)
 	if err := row.Scan(
-		&res.Name, &res.Address, &res.Dni, &res.Ruc,
-		&res.Brand, &res.Model, &res.Color, &res.Mileage,
+		&res.Propietary,
+		&res.Brand, &res.Model, &res.Year, &res.Mileage,
 	); err != nil {
 		if err == sql.ErrNoRows {
 			return &CtlSearchByPlateResponse{}, nil

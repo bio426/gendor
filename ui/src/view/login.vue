@@ -22,7 +22,7 @@ async function login() {
 			password: form.password,
 		})
 		authStore.setUser(user)
-		router.push({ name: "dashboard" })
+		router.push({ name: "workshop" })
 	} catch (err) {
 		if (!(err instanceof HTTPError)) throw err
 		const toast = useToast()

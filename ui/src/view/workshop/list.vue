@@ -1,17 +1,14 @@
 <script setup lang="ts">
 import { reactive, ref, watch } from "vue"
-import { PrinterIcon, ClipboardIcon } from "@heroicons/vue/24/solid"
-import { PDFDocument, StandardFonts } from "pdf-lib"
+import { PrinterIcon } from "@heroicons/vue/24/solid"
 
 import * as tWorkshop from "@/type/workshop"
 import workshopService from "@/service/workshop"
-import useToast from "@/composable/useToast"
 import printUtil from "@/util/print"
 import Header from "@/component/Header.vue"
 import Overlay from "@/component/Overlay.vue"
 import Pagination from "@/component/Pagination.vue"
 
-const toast = useToast()
 const loading = ref(false)
 
 const pagination = reactive({ total: 0, page: 1, from: 0, to: 0 })
@@ -36,92 +33,33 @@ async function getRows() {
 }
 getRows()
 
-async function printOrder(id: number) {
+async function printOrderPdf(id: number) {
 	loading.value = true
 	const res = await workshopService.detail(id)
-	const total = res.items.reduce(
-		(acc, item) => item.price * item.quantity + acc,
-		0
-	)
+	console.log(res)
+	const subtotal = res.items.reduce((acc, item) => item.price + acc, 0)
+	const total = subtotal - res.discount
 	const strItems = res.items.map((i) => ({
-		code: i.code,
-		quantity: i.quantity.toString(),
 		description: i.description,
-		punit: i.price.toFixed(2),
-		ptotal: (i.price * i.quantity).toFixed(2),
+		price: i.price.toFixed(2),
 	}))
+	loading.value = false
 
-	const printableHtml = printUtil.printableString({
-		id: `OT${res.id}`,
-		name: res.name,
-		address: res.address,
-		dni: res.dni,
-		ruc: res.ruc,
-		date: new Date(res.createdAt).toLocaleDateString(),
+	await printUtil.printWithPdf({
+		id: res.id,
+		propietary: res.propietary,
+		date: new Date(res.createdAt).toLocaleDateString("en-GB"),
 		brand: res.brand,
 		model: res.model,
-		color: res.color,
+		year: res.year ? res.year.toString() : "",
 		plate: res.plate,
 		mileage: `${res.mileage} KM`,
 		observation: res.observation,
-		subtotal: total.toFixed(2),
+		discount: res.discount.toFixed(2),
+		subtotal: subtotal.toFixed(2),
 		total: total.toFixed(2),
 		items: strItems,
 	})
-	loading.value = false
-
-	const win = window.open("", "PrintWindow")
-	if (win == null) return
-	win.document.write(printableHtml)
-	win.document.close
-	win.focus()
-	win.print()
-	win.close()
-}
-
-async function printOrderPdf(id: number) {
-	await printUtil.printWithPdf()
-}
-
-async function orderToClipboard(id: number) {
-	loading.value = true
-	const res = await workshopService.detail(id)
-	const total = res.items.reduce(
-		(acc, item) => item.price * item.quantity + acc,
-		0
-	)
-	const strItems = res.items.map((i) => ({
-		code: i.code,
-		quantity: i.quantity.toString(),
-		description: i.description,
-		punit: i.price.toFixed(2),
-		ptotal: (i.price * i.quantity).toFixed(2),
-	}))
-	const payload = {
-		id: `OT${res.id}`,
-		name: res.name,
-		address: res.address,
-		dni: res.dni,
-		ruc: res.ruc,
-		date: new Date(res.createdAt).toLocaleDateString(),
-		brand: res.brand,
-		model: res.model,
-		color: res.color,
-		plate: res.plate,
-		mileage: res.mileage.toString(),
-		observation: res.observation,
-		subtotal: total.toFixed(2),
-		total: total.toFixed(2),
-		items: strItems,
-	}
-	const blob = await printUtil.testClipboard(payload)
-	loading.value = false
-	await navigator.clipboard.write([
-		new ClipboardItem({
-			[blob.type]: blob,
-		}),
-	])
-	toast.display({ message: "Copied" })
 }
 </script>
 
@@ -160,7 +98,7 @@ async function orderToClipboard(id: number) {
 						<thead>
 							<tr>
 								<th>Placa</th>
-								<th>Nombre</th>
+								<th>Propietario</th>
 								<th>Creado</th>
 								<th>Accion</th>
 							</tr>
@@ -168,12 +106,12 @@ async function orderToClipboard(id: number) {
 						<tbody>
 							<tr v-for="row in rows" :key="row.id">
 								<td>{{ row.plate }}</td>
-								<td>{{ row.name }}</td>
+								<td>{{ row.propietary }}</td>
 								<td>
 									{{
 										new Date(
 											row.createdAt
-										).toLocaleDateString()
+										).toLocaleDateString("en-GB")
 									}}
 								</td>
 								<td>
@@ -181,23 +119,9 @@ async function orderToClipboard(id: number) {
 										<button
 											class="btn btn-xs btn-square"
 											title="Imprimir"
-											@click="printOrder(row.id)"
-										>
-											<PrinterIcon class="w-4 y-4" />
-										</button>
-										<button
-											class="btn btn-xs btn-warning btn-square"
-											title="Imprimir"
 											@click="printOrderPdf(row.id)"
 										>
 											<PrinterIcon class="w-4 y-4" />
-										</button>
-										<button
-											class="btn btn-xs btn-square"
-											title="Copiar"
-											@click="orderToClipboard(row.id)"
-										>
-											<ClipboardIcon class="w-4 y-4" />
 										</button>
 									</div>
 								</td>

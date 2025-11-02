@@ -14,15 +14,11 @@ import (
 type WorkshopCtl core.Controller
 
 type CtlListRow struct {
-	Id        int32     `json:"id"`
-	Name      string    `json:"name"`
-	Plate     string    `json:"plate"`
-	CreatedAt time.Time `json:"createdAt"`
+	Id         int32     `json:"id"`
+	Propietary string    `json:"propietary"`
+	Plate      string    `json:"plate"`
+	CreatedAt  time.Time `json:"createdAt"`
 }
-
-// type CtlListResponse struct {
-// 	Rows []CtlListRow `json:"rows"`
-// }
 
 type CtlListResponse core.PaginatedResponse[CtlListRow]
 
@@ -47,24 +43,20 @@ func (ctl *WorkshopCtl) List(c echo.Context) error {
 }
 
 type CtlDetailItem struct {
-	Code        string  `json:"code"`
-	Quantity    int32   `json:"quantity"`
 	Price       float32 `json:"price"`
 	Description string  `json:"description"`
 }
 type CtlDetailResponse struct {
-	Id          int32           `json:"id,omitempty"`
-	Name        string          `json:"name,omitempty"`
-	Address     string          `json:"address,omitempty"`
-	Dni         string          `json:"dni,omitempty"`
-	Ruc         string          `json:"ruc,omitempty"`
-	CreatedAt   time.Time       `json:"createdAt,omitempty"`
-	Brand       string          `json:"brand,omitempty"`
-	Model       string          `json:"model,omitempty"`
-	Color       string          `json:"color,omitempty"`
-	Plate       string          `json:"plate,omitempty"`
-	Mileage     string          `json:"mileage,omitempty"`
-	Observation string          `json:"observation,omitempty"`
+	Id          int32           `json:"id"`
+	Propietary  string          `json:"propietary"`
+	CreatedAt   time.Time       `json:"createdAt"`
+	Brand       string          `json:"brand"`
+	Model       string          `json:"model"`
+	Year        int32           `json:"year"`
+	Plate       string          `json:"plate"`
+	Mileage     string          `json:"mileage"`
+	Observation string          `json:"observation"`
+	Discount    float32         `json:"discount"`
 	Items       []CtlDetailItem `json:"items,omitempty"`
 }
 
@@ -89,19 +81,15 @@ func (ctl *WorkshopCtl) Detail(c echo.Context) error {
 
 func (ctl *WorkshopCtl) Create(c echo.Context) error {
 	body := struct {
-		Name        string `json:"name"`
-		Address     string `json:"address"`
-		Dni         string `json:"dni"`
-		Ruc         string `json:"ruc"`
-		Brand       string `json:"brand"`
-		Model       string `json:"model"`
-		Color       string `json:"color"`
-		Plate       string `json:"plate" validate:"required"`
-		Mileage     int32  `json:"mileage"`
-		Observation string `json:"observation"`
+		Propietary  string  `json:"propietary"`
+		Brand       string  `json:"brand"`
+		Model       string  `json:"model"`
+		Year        int32   `json:"year"`
+		Plate       string  `json:"plate" validate:"required"`
+		Mileage     int32   `json:"mileage"`
+		Observation string  `json:"observation"`
+		Discount    float32 `json:"discount"`
 		Items       []struct {
-			Code        string  `json:"code"`
-			Quantity    int32   `json:"quantity"`
 			Price       float32 `json:"price" validate:"required"`
 			Description string  `json:"description" validate:"required"`
 		} `json:"items" validate:"required,min=1"`
@@ -118,21 +106,16 @@ func (ctl *WorkshopCtl) Create(c echo.Context) error {
 	parsedItems := []SvcCreateItem{}
 	for _, item := range body.Items {
 		parsedItems = append(parsedItems, SvcCreateItem{
-			Code:        item.Code,
-			Quantity:    item.Quantity,
 			Price:       item.Price,
 			Description: item.Description,
 		})
 	}
 
 	err := Service.Create(c.Request().Context(), SvcCreateParams{
-		Name:        body.Name,
-		Address:     body.Address,
-		Dni:         body.Dni,
-		Ruc:         body.Ruc,
+		Propietary:  body.Propietary,
 		Brand:       body.Brand,
 		Model:       body.Model,
-		Color:       body.Color,
+		Year:        body.Year,
 		Plate:       body.Plate,
 		Mileage:     body.Mileage,
 		Observation: body.Observation,
@@ -147,14 +130,11 @@ func (ctl *WorkshopCtl) Create(c echo.Context) error {
 }
 
 type CtlSearchByPlateResponse struct {
-	Name    string `json:"name,omitempty" validate:"required"`
-	Address string `json:"address,omitempty" validate:"required"`
-	Dni     string `json:"dni,omitempty" validate:"required"`
-	Ruc     string `json:"ruc,omitempty" validate:"required"`
-	Brand   string `json:"brand,omitempty" validate:"required"`
-	Model   string `json:"model,omitempty" validate:"required"`
-	Color   string `json:"color,omitempty" validate:"required"`
-	Mileage int32  `json:"mileage,omitempty" validate:"required"`
+	Propietary string `json:"propietary,omitempty" validate:"required"`
+	Brand      string `json:"brand,omitempty" validate:"required"`
+	Model      string `json:"model,omitempty" validate:"required"`
+	Year       int32  `json:"year,omitempty" validate:"required"`
+	Mileage    int32  `json:"mileage,omitempty" validate:"required"`
 }
 
 func (ctl *WorkshopCtl) SearchByPlate(c echo.Context) error {
