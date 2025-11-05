@@ -23,13 +23,10 @@ export type OrderSimple = {
 }
 
 export type OrderFound = {
-	name?: string
-	address: string
-	dni: string
-	ruc: string
+	propietary: string
 	brand: string
 	model: string
-	color: string
+	year: number
 	mileage: number
 }
 

@@ -130,11 +130,11 @@ func (ctl *WorkshopCtl) Create(c echo.Context) error {
 }
 
 type CtlSearchByPlateResponse struct {
-	Propietary string `json:"propietary,omitempty" validate:"required"`
-	Brand      string `json:"brand,omitempty" validate:"required"`
-	Model      string `json:"model,omitempty" validate:"required"`
-	Year       int32  `json:"year,omitempty" validate:"required"`
-	Mileage    int32  `json:"mileage,omitempty" validate:"required"`
+	Propietary string `json:"propietary,omitempty"`
+	Brand      string `json:"brand"`
+	Model      string `json:"model"`
+	Year       int32  `json:"year"`
+	Mileage    int32  `json:"mileage"`
 }
 
 func (ctl *WorkshopCtl) SearchByPlate(c echo.Context) error {

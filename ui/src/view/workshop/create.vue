@@ -30,11 +30,11 @@ async function searchPlate() {
 	loading.value = true
 	const found = await workshopService.searchPlate({ plate: form.plate })
 	loading.value = false
-	if (found.name == undefined) {
+	if (found.propietary == undefined) {
 		toast.display({ message: "Plate not found", variant: "error" })
 		return
 	}
-	form.propietary = found.name
+	form.propietary = found.propietary
 	form.brand = found.brand
 	form.model = found.model
 	form.mileage = found.mileage
