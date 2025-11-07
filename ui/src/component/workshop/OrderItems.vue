@@ -9,7 +9,7 @@ const modelValue = defineModel<tWorkshop.OrderItem[]>({ required: true })
 const form = reactive({ description: "", price: 0 })
 function addItem() {
 	items.value.push({
-		description: form.description,
+		description: form.description.trim(),
 		price: form.price,
 	})
 	clearForm()

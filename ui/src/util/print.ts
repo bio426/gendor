@@ -154,28 +154,29 @@ export default {
 			font: helveticaFont,
 		})
 		// items
+		let lastHeight = 570
 		for (let i = 0; i < payload.items.length; i++) {
-			const baseHeight = 570
 			const lineMargin = 10
+			const clearText = payload.items[i].description.replace(/[\n\r\t]/gm, "")
 			const [text, lineCount] = ajustarTextoItems(
-				payload.items[i].description,
-				100
+				clearText,
+				95
 			)
-			let curHeight = baseHeight - i * (lineCount * 12)
-			if (i != 0) curHeight -= lineMargin * i
 			page.drawText(text, {
 				x: 27,
-				y: curHeight,
+				y: lastHeight,
 				size: 10,
 				font: helveticaFont,
 				lineHeight: 12,
 			})
 			page.drawText(payload.items[i].price, {
 				x: 500,
-				y: curHeight,
+				y: lastHeight,
 				size: 10,
 				font: helveticaFont,
 			})
+
+			lastHeight = lastHeight - (lineCount * 12) - lineMargin
 		}
 
 		// observaciones

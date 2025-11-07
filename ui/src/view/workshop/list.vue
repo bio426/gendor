@@ -36,7 +36,6 @@ getRows()
 async function printOrderPdf(id: number) {
 	loading.value = true
 	const res = await workshopService.detail(id)
-	console.log(res)
 	const subtotal = res.items.reduce((acc, item) => item.price + acc, 0)
 	const total = subtotal - res.discount
 	const strItems = res.items.map((i) => ({

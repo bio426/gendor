@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue"
 import { useRouter } from "vue-router"
-import { MagnifyingGlassIcon, PencilSquareIcon } from "@heroicons/vue/24/solid"
+import { MagnifyingGlassIcon } from "@heroicons/vue/24/solid"
 
-import * as tWorkshop from "@/type/workshop"
 import useToast from "@/composable/useToast"
 import workshopService from "@/service/workshop"
 import Overlay from "@/component/Overlay.vue"
