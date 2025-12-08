@@ -87,7 +87,7 @@ async function save() {
 							<button
 								class="btn btn-sm btn-square"
 								title="Quitar"
-								@click="removeItem(idx)"
+								@click.prevent="removeItem(idx)"
 							>
 								<TrashIcon class="w-4 fill-error" />
 							</button>
